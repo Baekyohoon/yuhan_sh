@@ -1,0 +1,16 @@
+쇼핑몰
+스포츠
+축구 
+유니폼, 양말, 축구화, 의류, 축구공, 골키퍼 장갑
+
+테이블
+- 유저 user (userid, passwd, username, phone, birth, address, verified)
+- 카테고리 category (categoryname)
+- 상품 goods (gname price category mainp date)
+- 재고 inventory (gid size count)
+- 상품 상세정보 goodsinfo (gid content)
+- 사진 image (gid photopath)
+- 주문 order (userid gid date state)
+- 장바구니 box (userid gid date)
+- 후기 review (gid userid comment star date)
+- 큐앤애이 qa (gid userid comment answer pp)
