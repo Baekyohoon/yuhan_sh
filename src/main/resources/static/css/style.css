@@ -20,6 +20,11 @@ html, body {
 	left:-0.24853515625px;
 	top:141.3349609375px;
 }
+.e50_597 a{
+	color: azure;
+	text-decoration: none;
+}
+
 .e50_598 { 
 	background-color:rgba(0, 132.599995136261, 255, 1);
 	width:100%;
@@ -127,6 +132,10 @@ html, body {
 	left:-0.24853515625px;
 	top:0.3349609375px;
 }
+.e50_600 a{
+	color: rgb(128, 128, 128);
+	text-decoration: none;
+}
 .e50_601 { 
 	background-color:rgba(228.4374949336052, 228.4374949336052, 228.4374949336052, 1);
 	width:100%;
@@ -210,10 +219,10 @@ html, body {
 .e50_633 { 
 	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
 	width:335px;
-	height:82px;
+	height:110px;
 	position:absolute;
 	left:362px;
-	top:19px;
+	top:5px;
 }
 .e50_678 { 
 	background-color:rgb(255, 255, 255);
@@ -236,5 +245,10 @@ html, body {
 	position: absolute;
     left: 90%;
     top: 0%;
-	background-color: antiquewhite;
+
+}
+
+.searchicon i{
+	font-size: 40px;
+	top: 5px;
 }
