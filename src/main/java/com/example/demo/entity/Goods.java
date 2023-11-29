@@ -32,6 +32,21 @@ public class Goods {
 	@OneToMany(mappedBy = "goods", cascade = CascadeType.ALL)
 	private List<Images> images;
 	
+	@OneToMany(mappedBy = "goods", cascade = CascadeType.ALL)
+	private List<Size> size;
+	
+	public List<Size> getSize() {
+		return size;
+	}
+	public void setSize(List<Size> size) {
+		this.size = size;
+	}
+	public Orders getOrders() {
+		return orders;
+	}
+	public void setOrders(Orders orders) {
+		this.orders = orders;
+	}
 	@OneToOne
 	@JoinColumn(name="infoid")
 	private GoodsInfo goodsInfo;
