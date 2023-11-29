@@ -13,9 +13,13 @@
 - 주문 order (userid gid date state)
 - 장바구니 box (userid gid date)
 - 후기 review (gid userid comment star date)
+<<<<<<< HEAD
+- 큐앤애이 qa (gid userid comment answer pp)
+=======
 - 큐앤애이 qa (gid userid comment answer pp)
 
 11-28
 피그마로 기본적인 페이지들 디자인후 컨트롤러및 html파일 적용
 메뉴 a태그 작업완료
 로고 디자인후 저장
+>>>>>>> 09d16c4c5c054a8402541f3567b9d015d0475f08
