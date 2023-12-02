@@ -63,7 +63,7 @@ public class GoodsController {
 					           @RequestParam String category,
 					           @RequestParam List<String> imagePaths,
 					           @RequestParam List<String> sizes) {
-		goodsService.saveGoods(productName, productPrice, productDescription, category, imagePaths, sizes);
+		//goodsService.saveGoods(productName, productPrice, productDescription, category, imagePaths, sizes);
 		
 		return "redirect:/";
 	}
