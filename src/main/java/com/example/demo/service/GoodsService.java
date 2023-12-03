@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,9 +8,12 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Goods;
 import com.example.demo.entity.GoodsInfo;
-import com.example.demo.entity.Images;
-import com.example.demo.entity.Size;
+import com.example.demo.repository.CategoryRepository;
+import com.example.demo.repository.GoodsInfoRepository;
 import com.example.demo.repository.GoodsRepository;
+import com.example.demo.repository.InventoryRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class GoodsService {
@@ -19,45 +21,46 @@ public class GoodsService {
 	@Autowired
 	private GoodsRepository goodsRepository;
 	
-	public void saveGoods(String productName, int productPrice, String productDescription,
-                          String category, String mainImagePath, List<String> additionalImagePaths, List<String> sizes) {
-		Goods goods = new Goods();
-		goods.setGname(productName);
-		goods.setPrice(productPrice);
-		goods.setDate(new Date()); // 현재 날짜로 설정
+	@Autowired
+    private GoodsInfoRepository goodsInfoRepository;
+	
+	@Autowired
+    private CategoryRepository categoryRepository;
+	
+	 @Autowired
+	 private InventoryRepository inventoryRepository;
+	
+	 @Transactional
+	public Goods createGoods(String productName, int productPrice, String productDescription, String categoryName) {
+	    // GoodsInfo 생성 및 저장
+	    GoodsInfo goodsInfo = new GoodsInfo();
+	    goodsInfo.setContent(productDescription);
+	    goodsInfoRepository.save(goodsInfo);
 
-		// 카테고리 설정
-		Category categoryEntity = new Category();
-		categoryEntity.setCategoryname(category);
-		categoryEntity.setGoods(goods);
-		goods.setCategory(categoryEntity);
+	    // Goods 이름, 가격, 날짜 설정
+	    Goods goods = new Goods();
+	    goods.setGname(productName);
+	    goods.setPrice(productPrice);
+	    goods.setDate(new Date());
+	    goods.setGoodsInfo(goodsInfo);
+	    
+	 // Goos 카테고리 설정
+	    Category category = new Category();
+	    category.setCategoryname(categoryName);
+	    category.setGoods(goods);
+	    categoryRepository.save(category);
 
-		// 상세정보 설정
-		GoodsInfo goodsInfo = new GoodsInfo();
-		goodsInfo.setContent(productDescription);
-		goodsInfo.setGoods(goods);
-		goods.setGoodsInfo(goodsInfo);
+        // Goods와 Category 연결
+        goods.setCategory(category);
+	    // Goods 저장
+	    goodsRepository.save(goods);
 
-		// 메인 이미지 설정
-		goods.setMainp(mainImagePath);
+	    // GoodsInfo에 Goods의 gid 설정
+	    goodsInfo.setGoods(goods);
+	    goodsInfoRepository.save(goodsInfo);
 
-		// 추가 이미지 설정
-		for (String imagePath : additionalImagePaths) {
-			Images image = new Images();
-			image.setPhotopath(imagePath);
-			image.setGoods(goods);
-			goods.getImages().add(image);
-		}
-
-		// 사이즈 설정
-		for (String size : sizes) {
-			Size sizeEntity = new Size();
-			sizeEntity.setSize(size);
-			sizeEntity.setGoods(goods);
-			goods.getSize().add(sizeEntity);
-		}
-
-		// 저장
-		goodsRepository.save(goods);
+	    // Goods 엔티티 반환
+	    return goods;
 	}
+	
 }

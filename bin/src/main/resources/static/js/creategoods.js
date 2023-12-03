@@ -1,3 +1,4 @@
+// scripts.js 파일 내
 
 let templateCount = 0;
 
@@ -107,16 +108,6 @@ class SizeQuantityBox {
             boxContainer.remove();
         }
     }
-    
-    getData() {
-        const sizeBoxValue = this.container.querySelector('input[type="text"][placeholder="사이즈"]').value;
-        const quantityBoxValue = this.container.querySelector('input[type="text"][placeholder="수량"]').value;
-
-        return {
-            size: sizeBoxValue,
-            quantity: quantityBoxValue
-        };
-    }
 }
 
 function addSizeQuantityBox(event) {
@@ -124,27 +115,6 @@ function addSizeQuantityBox(event) {
 
     const sizeQuantityContainer = document.getElementById('sizeQuantityContainer');
     const sizeQuantityBox = new SizeQuantityBox(sizeQuantityContainer, Date.now());
-    
-    const sizeQuantityData = sizeQuantityBox.getData();
-    sendSizeQuantityDataToServer(sizeQuantityData);
-}
-
-function sendSizeQuantityDataToServer(data) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/creategoods', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                console.log('Data sent successfully.');
-            } else {
-                console.error('Failed to send data.');
-            }
-        }
-    };
-
-    xhr.send(JSON.stringify(data));
 }
 
 document.getElementById('addSizeButton').addEventListener('click', addSizeQuantityBox);
