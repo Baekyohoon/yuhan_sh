@@ -28,19 +28,25 @@
     <span  class="e50_630"><a href="/glist_ball">축구공</a></span>
     <span  class="e50_631"><a href="/glist_gloves">골기퍼 장갑</a></span>
   </div>
-  <div class=e50_600>
+    <div class=e50_600>
     <div class="e50_601"></div>
-    <span  class="e50_603"><a href="/login">로그인</a></span>
+    <span th:if="${session.loggedInUserId == null}" class="e50_603">
+		<a href="/login">로그인</a>	
+    </span>
+    <span th:if="${session.loggedInUserId != null}" class="e50_603" style="left:1515px;">
+		<a href="/logout">로그아웃</a>
+    </span>
     <span  class="e50_604"><a href="/mybox">장바구니</a></span>
     <span  class="e50_605"><a href="/edituser">마이페이지</a></span>
     <span  class="e50_607"><a href="/orders">주문/배송 조회</a></span>
-    <span  class="e50_606"><a href="/signup1">회원가입</a></span>
+    <span  class="e50_606"><a th:if="${session.loggedInUserId == null}" href="/signup1">회원가입</a></span>
   </div>
   <div class=e50_679>
     <div class="e50_633"><a href="/"><img src="../img/로고.png" style="width: 100%; height: 100%;"></a></div>
     <div class="e50_678"><input type="text" name="searchtxt" id="searchtxt" class="searchtxt">
     <div class="searchicon"><i class="fa-solid fa-magnifying-glass" style="width:45px; height:45px;"></i></div></div>
   </div>
+  
   
  <!-- body 시작!!!!!!!!!!!!!!!!!!!1-->
   <div class=e5_86>
