@@ -9,7 +9,7 @@
 
 	</style>
 	
-	<link rel="stylesheet" type="text/css" th:href="@{/../css/goodsview.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/../css/creategoods.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/../css/style.css}" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,25 +45,50 @@
   <!-- body 시작!!!!!!!!!!!!!!-->
   <div class=e26_207>
     <div class=e26_218>
-      <div class="e27_235"></div><span  class="e26_219">상품명 </span><span  class="e26_220">가격</span><span  class="e27_228">상세정보</span>
-      <div class="e27_225"></div>
-      <div class="e27_226"></div>
-      <div class="e27_229"></div>
-      <div class="e27_230"></div><span  class="e27_231">게시</span>
+		<div class="goods_info">
+       		<form id="productForm" action="/creategoods" method="POST" enctype="multipart/form-data">
+			    <label for="productName">상품명:</label>
+			    <input type="text" id="productName" name="productName" required><br>
+			
+			    <label for="productPrice">가격:</label>
+			    <input type="number" id="productPrice" name="productPrice" required><br>
+			
+			    <label for="productDescription">상세정보:</label>
+			    <textarea id="productDescription" name="productDescription" required></textarea><br>
+			    
+			     <!-- 카테고리 선택 -->
+			    <label for="category">카테고리:</label>
+			    <select id="category" name="category" required>
+			        <option value="축구화">축구화</option>
+			        <option value="유니폼">유니폼</option>
+			        <option value="의류">의류</option>
+			        <option value="축구공">축구공</option>
+			        <option value="골키퍼장갑">골키퍼 장갑</option>
+			        <option value="양말">양말</option>
+			    </select><br>
+    
+			    <div class="add_size">
+					<div class="size-quantity-container" id="sizeQuantityContainer"></div>
+        			<button onclick="addSizeQuantityBox(event)">사이즈 및 수량 추가</button>
+				</div>
+			    <div class="add_goods" id="container">
+				    <!-- 이미지와 템플릿을 담을 컨테이너 -->
+				    <div id="templateContainer"></div>
+				
+				    <!-- 템플릿 추가 버튼 -->
+				    <button onclick="addTemplate(event)">사진 추가</button>
+				</div>
+			
+			    <button type="submit">게시</button>
+			</form>
+		</div>
     </div>
-    <div class=e27_232>
-      <div class="e27_236"></div>
-      <div class="e27_233"></div><span  class="e27_234">이미지 추가</span>
-      <div class="e27_237"></div>
-      <div class="e27_238"></div><span  class="e27_239">추가</span><span  class="e27_240">삭제</span>
-      <div class="e27_241"></div><span  class="e27_242">이미지 추가</span>
-      <div class="e27_243"></div>
-      <div class="e27_244"></div><span  class="e27_245">추가</span><span  class="e27_246">삭제</span>
-    </div>
+	
   </div>
 <!-- body 끝!!!!!!!!!!!!!!-->
 
 </div>
+<script th:src="@{/../js/creategoods.js}"></script>
 </body>
 
 </html>

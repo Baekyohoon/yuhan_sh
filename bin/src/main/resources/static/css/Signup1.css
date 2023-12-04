@@ -28,6 +28,17 @@
 	left:166px;
 	top:491px;
 }
+.e57_215 button{
+	width: 100%;
+	height: 100%;
+	border: none;
+	color: azure;
+	font-size: 30px;
+	font-weight: bold;
+	cursor: pointer;
+	background-color: dodgerblue;
+	border-radius: 5px;
+}
 .e57_216 { 
 	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
 	width:459px;
