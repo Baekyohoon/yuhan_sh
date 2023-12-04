@@ -13,6 +13,7 @@ function addTemplate(event) {
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.accept = 'image/*';
+    fileInput.name = 'file';
     fileInput.style.display = 'none';
     fileInput.onchange = () => addImage(fileInput, previewImage);
 
@@ -80,10 +81,14 @@ class SizeCountBox {
     createBox() {
         const sizeBox = document.createElement('input');
         sizeBox.type = 'text';
+        sizeBox.id = 'size'
+        sizeBox.name = 'size'
         sizeBox.placeholder = '사이즈';
 
         const countBox = document.createElement('input');
         countBox.type = 'text';
+        countBox.id = 'count'
+        countBox.name = 'count'
         countBox.placeholder = '수량';
 
         const removeButton = document.createElement('button');
