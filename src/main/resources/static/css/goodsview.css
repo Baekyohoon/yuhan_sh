@@ -500,3 +500,26 @@
 	left:362px;
 	top:19px;
 }
+
+.size_choice{
+	position:absolute;
+	top: 330px;
+	left: 10%;
+}
+
+.submit-button {
+	margin-top: 30px;
+    width: 450px; /* 버튼의 폭 조절 */
+    height: 70px; /* 버튼의 높이 조절 */
+    border-radius: 30px; /* 타원형 모양으로 만들기 위한 border-radius */
+    background-color: rgb(192, 192, 192); /* 버튼 배경 색상 */
+    color: white; /* 글자 색상 */
+    font-size: 18px; /* 글자 크기 */
+    cursor: pointer; /* 커서 모양을 손가락 모양으로 변경 */
+    border: none; /* 외곽선 제거 */
+    outline: none; /* 외곽선 포커스 표시 제거 */
+}
+
+.submit-button:hover {
+    background-color: rgb(128, 128, 128); /* 마우스를 올렸을 때의 배경 색상 */
+}

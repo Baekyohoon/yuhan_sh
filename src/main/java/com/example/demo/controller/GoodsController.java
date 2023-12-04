@@ -4,12 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.entity.Goods;
+import com.example.demo.entity.Inventory;
+import com.example.demo.repository.GoodsRepository;
+import com.example.demo.repository.InventoryRepository;
 import com.example.demo.service.GoodsService;
 
 @Controller
@@ -17,6 +22,10 @@ public class GoodsController {
 	
 	@Autowired
 	private GoodsService goodsService;
+	@Autowired
+	private GoodsRepository goodsRepository;
+	@Autowired
+	private InventoryRepository inventoryRepository;
 	
 	@GetMapping("/glist_ball")
 	public String goodslistball() {
@@ -71,8 +80,14 @@ public class GoodsController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("/goodsview")
-	public String GoodsView() {
+	
+	@GetMapping("/goodsview/{gid}")
+	public String GoodsView(@PathVariable int gid, Model model) {
+		Goods goods = goodsRepository.findByGid(gid);
+		List<Inventory> inventories = inventoryRepository.findByGoods(goods);
+		// Goods 객체를 모델에 추가합니다.
+	    model.addAttribute("goods", goods);
+	    model.addAttribute("inventories", inventories);
 		return "GoodsView";
 	}
 	
