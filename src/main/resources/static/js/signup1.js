@@ -7,7 +7,7 @@ document.getElementById('signupButton').addEventListener('click', function() {
     
 
     
- Kakao.init('8bae42d5714a64b82e4730f2dac59082');
+ window.Kakao.init("c34e4ae894a6c864e4db84aeb5b56d78");
 
   // 카카오 로그인 버튼 클릭 이벤트 핸들러
   document.getElementById('kakao-login-btn').addEventListener('click', function() {
@@ -23,4 +23,20 @@ document.getElementById('signupButton').addEventListener('click', function() {
       },
     });
   });
+  
+  function kakakologin(){
+	  window.Kakao.Auth.login({
+		  scope:'profile_nickname, account_email',
+		  success:function(authObj) {
+			  console.log(authObj);
+			  window.Kakao.API.request({
+				  url:'/v2/user/me',
+				  success: res =>{
+					  const kakao_account = res.kakao_account;
+					  console.log(kakao_account);
+				  }
+			  });
+		  }
+	  });
+  }
 
