@@ -1,10 +1,13 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.entity.Goods;
 import com.example.demo.service.GoodsService;
@@ -59,11 +62,12 @@ public class GoodsController {
 	public String CreateGoods2( @RequestParam("productName") String productName,
 					            @RequestParam("productPrice") int productPrice, 
 					            @RequestParam("productDescription") String productDescription, 
-					            @RequestParam("category") String category, 
-					            @RequestParam("size") String size,
-					            @RequestParam("count") int count) {
+					            @RequestParam("category") String category,
+					            @RequestParam(name="file") List<MultipartFile> file,
+					            @RequestParam(name="size") List<String> size,
+					            @RequestParam(name="count") List<Integer> count) {
 		// Goods 생성
-        Goods createdGoods = goodsService.createGoods(productName, productPrice, productDescription, category, size, count);
+        Goods createdGoods = goodsService.createGoods(productName, productPrice, productDescription, category, file, size, count);
 		return "redirect:/";
 	}
 	
