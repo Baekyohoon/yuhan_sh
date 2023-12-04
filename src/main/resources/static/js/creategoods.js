@@ -71,7 +71,7 @@ function addImage(fileInput, previewImage) {
 }
 
 
-class SizeQuantityBox {
+class SizeCountBox {
     constructor(container, id) {
         this.container = container;
         this.id = id;
@@ -83,26 +83,26 @@ class SizeQuantityBox {
         sizeBox.type = 'text';
         sizeBox.placeholder = '사이즈';
 
-        const quantityBox = document.createElement('input');
-        quantityBox.type = 'text';
-        quantityBox.placeholder = '수량';
+        const countBox = document.createElement('input');
+        countBox.type = 'text';
+        countBox.placeholder = '수량';
 
         const removeButton = document.createElement('button');
         removeButton.textContent = '삭제';
         removeButton.addEventListener('click', () => this.removeBox());
 
         const boxContainer = document.createElement('div');
-        boxContainer.className = 'size-quantity-box';
-        boxContainer.id = `sizeQuantityBox${this.id}`;
+        boxContainer.className = 'size-count-box';
+        boxContainer.id = `sizeCountBox${this.id}`;
         boxContainer.appendChild(sizeBox);
-        boxContainer.appendChild(quantityBox);
+        boxContainer.appendChild(countBox);
         boxContainer.appendChild(removeButton);
 
         this.container.appendChild(boxContainer);
     }
 
     removeBox() {
-        const boxContainer = document.getElementById(`sizeQuantityBox${this.id}`);
+        const boxContainer = document.getElementById(`sizeCountBox${this.id}`);
         if (boxContainer) {
             boxContainer.remove();
         }
@@ -110,26 +110,26 @@ class SizeQuantityBox {
     
     getData() {
         const sizeBoxValue = this.container.querySelector('input[type="text"][placeholder="사이즈"]').value;
-        const quantityBoxValue = this.container.querySelector('input[type="text"][placeholder="수량"]').value;
+        const countBoxValue = this.container.querySelector('input[type="text"][placeholder="수량"]').value;
 
         return {
             size: sizeBoxValue,
-            quantity: quantityBoxValue
+            count: countBoxValue
         };
     }
 }
 
-function addSizeQuantityBox(event) {
+function addSizeCountBox(event) {
     event.preventDefault(); // 폼의 제출을 막음
 
-    const sizeQuantityContainer = document.getElementById('sizeQuantityContainer');
-    const sizeQuantityBox = new SizeQuantityBox(sizeQuantityContainer, Date.now());
+    const sizeCountContainer = document.getElementById('sizeCountContainer');
+    const sizeCountBox = new SizeCountBox(sizeCountContainer, Date.now());
     
-    const sizeQuantityData = sizeQuantityBox.getData();
-    sendSizeQuantityDataToServer(sizeQuantityData);
+    const sizeCountData = sizeCountBox.getData();
+    sendSizeCountDataToServer(sizeCountData);
 }
 
-function sendSizeQuantityDataToServer(data) {
+function sendSizeCountDataToServer(data) {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/creategoods', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -147,5 +147,5 @@ function sendSizeQuantityDataToServer(data) {
     xhr.send(JSON.stringify(data));
 }
 
-document.getElementById('addSizeButton').addEventListener('click', addSizeQuantityBox);
+document.getElementById('addSizeButton').addEventListener('click', addSizeCountBox);
 document.getElementById('addTemplateButton').addEventListener('click', addTemplate);

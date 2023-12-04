@@ -538,23 +538,23 @@ textarea{
     margin-top: 20px;
 }
 
-.size-quantity-container {
+.size-count-container {
     margin-top: 20px;
     text-align: center; /* 가운데 정렬 */
 }
 
-.size-quantity-box {
+.size-count-box {
     display: flex;
     gap: 10px;
     width: 400px; /* 원하는 가로 사이즈 지정 */
     margin: 0 auto; /* 수평 가운데 정렬 */
 }
 
-.size-quantity-box input {
+.size-count-box input {
     width: 100%;
 }
 
-.size-quantity-box button {
+.size-count-box button {
     background-color: #ff5555;
     color: white;
     border: none;
