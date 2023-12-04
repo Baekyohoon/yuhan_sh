@@ -21,9 +21,16 @@ public class User {
 	private String passwd;
 	private String name;
 	private int phone;
-	private Date birth;
+	
 	private String address;
 	private int verified;
+	private String email;
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	@OneToOne
 	@JoinColumn(name="oid")
 	private Orders order;
@@ -74,12 +81,7 @@ public class User {
 	public void setPhone(int phone) {
 		this.phone = phone;
 	}
-	public Date getBirth() {
-		return birth;
-	}
-	public void setBirth(Date birth) {
-		this.birth = birth;
-	}
+
 	public String getAddress() {
 		return address;
 	}
