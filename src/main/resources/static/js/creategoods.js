@@ -1,4 +1,3 @@
-
 let templateCount = 0;
 
 function addTemplate(event) {
@@ -108,15 +107,18 @@ class SizeCountBox {
         }
     }
     
-    getData() {
-        const sizeBoxValue = this.container.querySelector('input[type="text"][placeholder="사이즈"]').value;
-        const countBoxValue = this.container.querySelector('input[type="text"][placeholder="수량"]').value;
+   getData() {
+    const sizeBox = this.container.querySelector('input[type="text"][placeholder="사이즈"]');
+    const countBox = this.container.querySelector('input[type="text"][placeholder="수량"]');
 
-        return {
-            size: sizeBoxValue,
-            count: countBoxValue
-        };
-    }
+    const sizeBoxValue = sizeBox ? sizeBox.value : '';
+    const countBoxValue = countBox ? countBox.value : '';
+
+    return {
+        size: sizeBoxValue,
+        count: countBoxValue
+    };
+}
 }
 
 function addSizeCountBox(event) {
@@ -146,6 +148,3 @@ function sendSizeCountDataToServer(data) {
 
     xhr.send(JSON.stringify(data));
 }
-
-document.getElementById('addSizeButton').addEventListener('click', addSizeCountBox);
-document.getElementById('addTemplateButton').addEventListener('click', addTemplate);

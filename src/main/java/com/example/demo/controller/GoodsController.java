@@ -56,10 +56,14 @@ public class GoodsController {
 	}
 	
 	@PostMapping("/creategoods")
-	public String CreateGoods2(@RequestParam("productName") String productName,
-            @RequestParam("productPrice") int productPrice, @RequestParam("productDescription") String productDescription, @RequestParam("category") String category) {
+	public String CreateGoods2( @RequestParam("productName") String productName,
+					            @RequestParam("productPrice") int productPrice, 
+					            @RequestParam("productDescription") String productDescription, 
+					            @RequestParam("category") String category, 
+					            @RequestParam("size") String size,
+					            @RequestParam("count") int count) {
 		// Goods 생성
-        Goods createdGoods = goodsService.createGoods(productName, productPrice, productDescription, category);
+        Goods createdGoods = goodsService.createGoods(productName, productPrice, productDescription, category, size, count);
 		return "redirect:/";
 	}
 	

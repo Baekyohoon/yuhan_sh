@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Goods;
 import com.example.demo.entity.GoodsInfo;
+import com.example.demo.entity.Inventory;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.GoodsInfoRepository;
 import com.example.demo.repository.GoodsRepository;
@@ -31,7 +32,7 @@ public class GoodsService {
 	 private InventoryRepository inventoryRepository;
 	
 	 @Transactional
-	public Goods createGoods(String productName, int productPrice, String productDescription, String categoryName) {
+	public Goods createGoods(String productName, int productPrice, String productDescription, String categoryName, String size, int count) {
 	    // GoodsInfo 생성 및 저장
 	    GoodsInfo goodsInfo = new GoodsInfo();
 	    goodsInfo.setContent(productDescription);
@@ -58,6 +59,13 @@ public class GoodsService {
 	    // GoodsInfo에 Goods의 gid 설정
 	    goodsInfo.setGoods(goods);
 	    goodsInfoRepository.save(goodsInfo);
+	    
+	 // Size 및 Count 정보 저장
+        Inventory inventory = new Inventory();
+        inventory.setSize(size);
+        inventory.setCount(count);
+        inventory.setGoods(goods);
+        inventoryRepository.save(inventory);
 
 	    // Goods 엔티티 반환
 	    return goods;
