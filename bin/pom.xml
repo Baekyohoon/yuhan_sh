@@ -47,8 +47,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<<<<<<< HEAD
-=======
 		<dependency>
     <groupId>org.apache.tomcat.embed</groupId>
     <artifactId>tomcat-embed-jasper</artifactId>
@@ -214,7 +212,6 @@
         <artifactId>spring-boot-starter</artifactId>
     </dependency>
 
->>>>>>> 09d16c4c5c054a8402541f3567b9d015d0475f08
 	</dependencies>
 
 	<build>
