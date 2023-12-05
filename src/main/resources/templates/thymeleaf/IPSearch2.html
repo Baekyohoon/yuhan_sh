@@ -52,22 +52,16 @@
   
 <!--	  여기부터 body입니다-->
 <div class=e60_339><span  class="e60_340">아이디/비밀번호 찾기</span>
-<form th:action="@{/ipsearch}" method="post">
-  <div class=e60_341><span  class="e60_342">
-	  <input type="checkbox" id="idfind" name="find" value="idfind" style="width: 20px;" checked>
-<label style="width: 160px;">아이디 찾기</label>
-</span>
-	    <span  class="e60_345">
-			<input type="checkbox" id="pwfind" name="find" value="pwfind" style="width: 20px;">
-			<label style="width: 160px;">비밀번호 찾기</label></span>
-	  <span  class="e60_343"><label for="username">이름</label></span>
-	  <span  class="e60_344"><label for="email">이메일</label></span>
+<form th:action="@{/chpw}" method="post">
+  <div class=e60_341>
+	  <span  class="e60_343" style="width: 350px;"><label for="username">새로운 비밀번호</label></span>
+	  <span  class="e60_344" style="width: 350px;"><label for="email">비밀번호 확인</label></span>
 	
-    <div class="e60_346"><input type="text" id="name" name="name"></div>
-    <div class="e60_349"><input type="email" id="email" name="email"></div>
-    <div class="e60_347"><input type="submit" value="찾기"></div>
+    <div class="e60_346" style="left: 350px;"><input type="text" id="pw" name="pw"></div>
+    <div class="e60_349" style="left: 350px;"><input type="text" id="npw" name="npw"></div>
+    <div class="e60_347"><input type="submit" value="수정"></div>
     </form>
-    <div class="e60_348"><button id="loginbtn">로그인</button></div>
+   
     
   </div><span  class="e60_350">회원가입 시, 입력하신 이름 + 이메일로 아이디 및 비밀번호를 확인하실 수 있습니다.</span>
 </div>

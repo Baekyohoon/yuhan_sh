@@ -21,7 +21,8 @@ import jakarta.servlet.http.HttpSession;
 public class LoginController {
 	@Autowired
 	private UserRepository userR;
-
+	
+	private User nuser;
 	@GetMapping("/login")
 	public String Login(Model model) {
 		model.addAttribute("user", new User());
@@ -43,6 +44,56 @@ public class LoginController {
 	public String ipsearch() {
 		return "ipsearch";
 	}
+	
+	@PostMapping("/ipsearch")
+	public String ipsearchp(@RequestParam(name="find", required = false) String find,
+			@RequestParam(name="name", required = false) String name,
+			@RequestParam(name="email", required = false) String email,
+			RedirectAttributes redirectAttributes) {
+		if(find.equals("idfind")) {
+			User user = userR.findByemail(email);
+			nuser = user;
+			if(user == null) {
+				redirectAttributes.addFlashAttribute("failedMessage", "존재하지 않은 아이디입니다.");
+				return "redirect:/ipsearch";
+			}else {
+				redirectAttributes.addFlashAttribute("sMessage", "아이디는 "+user.getId()+"입니다.");
+				return "redirect:/ipsearch";
+			}
+		}else {
+			User user = userR.findByemail(email);
+			nuser = user;
+			if(user == null) {
+				redirectAttributes.addFlashAttribute("failedMessage", "존재하지 않은 아이디입니다.");
+				return "redirect:/ipsearch";
+			}else {
+				redirectAttributes.addFlashAttribute("sMessage", "비밀번호를 변경해주세요.");
+				return "redirect:/ipsearch2";
+			}
+		}
+		
+	}
+	
+	@GetMapping("/ipsearch2")
+	public String ipsearch2() {
+		return "ipsearch2";
+	}
+	
+	@PostMapping("/chpw")
+	public String chpw(@RequestParam(name="pw", required = false) String pw,
+			@RequestParam(name="npw", required = false) String npw,
+			RedirectAttributes redirectAttributes) {
+		if(pw.equals(npw)) {
+			nuser.setPasswd(pw);
+			userR.save(nuser);
+			redirectAttributes.addFlashAttribute("sMessage", "비밀번호가 변경되었습니다.");
+			return "redirect:/login";
+		}else {
+			redirectAttributes.addFlashAttribute("fMessage", "비밀번호가 다릅니다.");
+			return "redirect:/psearch2";
+		}
+		
+	}
 
 	@PostMapping("/signup")
 	public String createuser(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
@@ -54,7 +105,7 @@ public class LoginController {
 	@ResponseBody
 	public boolean checkUserIdAvailability(@RequestParam String id) {
 		// 데이터베이스에서 해당 사용자 이름을 검색하여 결과 확인
-		List<User> existingUser = userR.findByUserId(id);
+		List<User> existingUser = userR.findByUserIdList(id);
 
 		// 중복 여부에 따라 결과 반환
 		return existingUser.isEmpty(); // true는 중복이 아님, false는 중복임
@@ -73,7 +124,7 @@ public class LoginController {
 	@PostMapping("/login")
     public String loginUser(@RequestParam String id, @RequestParam String passwd, RedirectAttributes redirectAttributes, HttpSession session) {
         // 사용자 정보를 데이터베이스에서 조회합니다.
-        List<User> users = userR.findByUserId(id);
+        List<User> users = userR.findByUserIdList(id);
 
         if (!users.isEmpty()) {
             User user = users.get(0); // 첫 번째 사용자를 선택합니다.

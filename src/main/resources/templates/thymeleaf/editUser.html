@@ -50,20 +50,39 @@
 <!--	  여기부터 body입니다-->
 <div class=e61_40><span  class="e61_41">회원정보 수정</span>
   <div class=e61_42><span  class="e61_43">이름</span><span  class="e61_44">아이디</span><span  class="e61_45">비밀번호</span><span  class="e61_46">비밀번호 확인</span><span  class="e61_47">이메일</span><span  class="e61_48">휴대폰 번호</span>
-    <div class="e61_49"></div>
-    <div class="e61_50"></div>
-    <div class="e61_51"></div>
-    <div class="e61_52"></div>
-    <div class="e61_53"></div>
-    <div class="e61_54"></div>
-    <div class="e61_55"></div>
+    <form th:action="@{/edituser}" method="post">
+    <div class="e61_49"><label th:text="${user.name}"></label></div>
+    <div class="e61_50"><label th:text="${user.id}"></div>
+    <div class="e61_51"><input type="text" id="passwd" name="passwd"></div>
+    <div class="e61_52"><input type="text" id="confirmpasswd" name="confirmpasswd"></div>
+    <div class="e61_53"><label th:text="${user.email}"></div>
+    <div class="e61_54"><label th:text="${user.phone}"></div>
+    <div class="e61_55"><input type="submit" value="수정"></div>
+    </form>
   </div>
 </div>
 
 <!--여기가 끝입니다.-->
 
   </div>
-
+<script th:inline="javascript">
+		var sendMessage = /*[[${loginMessage}]]*/ "";
+		if (sendMessage) {
+			alert(sendMessage);
+		}
+	</script>
+	<script th:inline="javascript">
+		var sendMessage = /*[[${successMessage}]]*/ "";
+		if (sendMessage) {
+			alert(sendMessage);
+		}
+	</script>
+	<script th:inline="javascript">
+		var sendMessage = /*[[${failedMessage}]]*/ "";
+		if (sendMessage) {
+			alert(sendMessage);
+		}
+	</script>
 </body>
 
 </html>
