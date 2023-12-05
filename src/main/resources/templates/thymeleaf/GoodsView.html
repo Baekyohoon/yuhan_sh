@@ -63,22 +63,24 @@
       <div class=e4_4>
         <div class="e4_13"></div>
       </div>
-      <div class=e4_5><span  class="e4_14">축구화 나이키 팬텀 GX 엘리트 FG (DC9968300)(DC9968-300)</span>
-      <span  class="e4_15">289,000원</span>
-      <span  class="e5_2">사이즈 선택</span>
-        <div class="size_choice">
-		    <form action="/your_form_action" method="post">
-	            <input type="hidden" name="selectedSize" id="selectedSize">
-	            <div th:each="inventory, iterStat : ${inventories}">
-	                <label>
-	                    <input type="radio" name="size" value="${inventory.size}">
-	                    <span th:text="${inventory.size}"></span>
-	                </label>
-	            </div>
-	            <button type="submit" class="submit-button">구매하기</button>
-	        </form>
-		</div>
-        <div class="e5_15"></div>
+      <div class=e4_5>
+		  <span  th:text="${goods.gname}" class="e4_14"></span>
+	      <span  th:text="${goods.price}+원" class="e4_15"></span>
+	      
+	      <span  class="e5_2">사이즈 선택</span>
+	        <div class="size_choice">
+			    <form action="/your_form_action" method="post">
+		            <input type="hidden" name="selectedSize" id="selectedSize">
+		            <div th:each="inventory, iterStat : ${inventories}">
+		                <label>
+		                    <input type="radio" name="size" value="${inventory.size}">
+		                    <span th:text="${inventory.size}"></span>
+		                </label>
+		            </div>
+		            <button type="submit" class="submit-button">구매하기</button>
+		        </form>
+			</div>
+	        <div class="e5_15"></div>
       </div>
     </div>
     <div class=e5_20>
@@ -87,23 +89,9 @@
         <div class="e5_18"></div>
         <div class="e5_19"></div>
       </div>
-      <div class=e5_21><span  class="e5_22">80년대의 농구 아이콘이 클래식한 디테일과 레트로 농구화의 감성으로 돌아왔습니다. 빈티지한 감성으로 거리를 물들이며, 로우컷 패딩 카라로 어디서든 편안함을 느끼게 해줍니다.
-
-상품 특징
-80년대 농구가 떠오르는 내구성 좋은 구조의 갑피는 시간이 갈수록 부드럽게 완성
-반응성 좋은 쿠셔닝을 선사하는 경량 폼 중창
-로우컷 패딩 카라로 날렵한 룩과 편안한 착화감 구현
-클래식 농구 피벗 서클이 새겨진 고무 밑창이 내구성과 접지력, 헤리티지 스타일 선사
-
-상품 상세 정보
-토의 천공 디테일
-고무 밑창
-현재 컬러: 화이트/코코넛 밀크/블랙
-스타일 번호: FQ8899-100
-제조 국가/지역: 인도네시아
-
-나이키 덩크
-빠듯한 일정으로 수많은 매시업과 수정을 거듭한 끝에 탄생한 나이키 덩크는 85~86년 시즌 대학 농구 경기에 등장했습니다. 오리지널 칼리지 컬러 디자인은 학교에 대한 소속감을 높여 주었지만, 덩크의 인기는 그리 높지 않았습니다. 그런데 바로 이처럼 큰 인기를 얻지 못했다는 점과 특유의 평평하고 그립력 좋은 밑창 덕분에 덩크는 경로를 바꿔 스케이트보더들의 마음을 사로잡게 되었습니다. 수십 년이 지난 지금도 이 인기 데일리 아이템은 수많은 컬러웨이로 많은 이들이 탐내는 아이템으로 남아 있으며, 누구도 그 영향력을 부인할 수 없습니다.</span></div>
+      <div class=e5_21>
+		  <span  th:text="${goodsInfo.content}" class="e5_22"></span>
+	  </div>
     </div>
   </div>
 <!-- body 끝!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
