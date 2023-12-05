@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.entity.Goods;
+import com.example.demo.entity.GoodsInfo;
 import com.example.demo.entity.Inventory;
+import com.example.demo.repository.GoodsInfoRepository;
 import com.example.demo.repository.GoodsRepository;
 import com.example.demo.repository.InventoryRepository;
 import com.example.demo.service.GoodsService;
@@ -26,6 +28,8 @@ public class GoodsController {
 	private GoodsRepository goodsRepository;
 	@Autowired
 	private InventoryRepository inventoryRepository;
+	@Autowired
+	private GoodsInfoRepository goodsInfoRepository;
 	
 	@GetMapping("/glist_ball")
 	public String goodslistball() {
@@ -84,9 +88,11 @@ public class GoodsController {
 	@GetMapping("/goodsview/{gid}")
 	public String GoodsView(@PathVariable int gid, Model model) {
 		Goods goods = goodsRepository.findByGid(gid);
+		GoodsInfo goodsInfo = goodsInfoRepository.findByGoods(goods);
 		List<Inventory> inventories = inventoryRepository.findByGoods(goods);
 		// Goods 객체를 모델에 추가합니다.
 	    model.addAttribute("goods", goods);
+	    model.addAttribute("goodsInfo", goodsInfo);
 	    model.addAttribute("inventories", inventories);
 	    model.addAttribute("gid",gid);
 		return "GoodsView";
