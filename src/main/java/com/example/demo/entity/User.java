@@ -31,9 +31,9 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	@OneToOne
-	@JoinColumn(name="oid")
-	private Orders order;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Orders> orders;
+	
 	
 	@OneToOne
 	@JoinColumn(name="bid")
@@ -57,11 +57,12 @@ public class User {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public Orders getOrder() {
-		return order;
+	
+	public List<Orders> getOrders() {
+		return orders;
 	}
-	public void setOrder(Orders order) {
-		this.order = order;
+	public void setOrders(List<Orders> orders) {
+		this.orders = orders;
 	}
 	public String getPasswd() {
 		return passwd;

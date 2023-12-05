@@ -67,14 +67,18 @@
       <span  class="e4_15">289,000원</span>
       <span  class="e5_2">사이즈 선택</span>
         <div class="size_choice">
-		    <form action="/your_form_action" method="post">
+		    <form action="/createorders" method="post">
 	            <input type="hidden" name="selectedSize" id="selectedSize">
 	            <div th:each="inventory, iterStat : ${inventories}">
 	                <label>
 	                    <input type="radio" name="size" value="${inventory.size}">
 	                    <span th:text="${inventory.size}"></span>
 	                </label>
+	                
 	            </div>
+	            <label>수량</label>
+	                <input type="text" name="count">
+	                <input type="hidden" name="gid" th:value="${gid}">
 	            <button type="submit" class="submit-button">구매하기</button>
 	        </form>
 		</div>

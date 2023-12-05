@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
@@ -17,13 +18,17 @@ public class Orders {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int oid;
+	//주문수량
 	private int count;
 	private Date date;
 	private String state;
-	@OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
-	private List<Goods> goods;
+	private int price;
 	
-	@OneToOne
+	@ManyToOne
+	@JoinColumn(name="gid")
+	Goods goods;
+	
+	@ManyToOne
 	@JoinColumn(name="id")
 	private User user;
 	
@@ -40,10 +45,10 @@ public class Orders {
 	public void setCount(int count) {
 		this.count = count;
 	}
-	public List<Goods> getGoods() {
+	public Goods getGoods() {
 		return goods;
 	}
-	public void setGoods(List<Goods> goods) {
+	public void setGoods(Goods goods) {
 		this.goods = goods;
 	}
 	public User getUser() {
@@ -63,6 +68,12 @@ public class Orders {
 	}
 	public void setState(String state) {
 		this.state = state;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
 	}
 	
 	

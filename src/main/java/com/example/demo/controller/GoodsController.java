@@ -88,6 +88,7 @@ public class GoodsController {
 		// Goods 객체를 모델에 추가합니다.
 	    model.addAttribute("goods", goods);
 	    model.addAttribute("inventories", inventories);
+	    model.addAttribute("gid",gid);
 		return "GoodsView";
 	}
 	

@@ -13,6 +13,7 @@ public class Inventory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int invenid;
 	private String size;
+	//재고수량
 	private int count;
 	@ManyToOne
 	@JoinColumn(name="gid")

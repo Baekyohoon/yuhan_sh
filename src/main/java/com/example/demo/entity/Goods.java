@@ -41,19 +41,13 @@ public class Goods {
 	public void setSize(List<Size> size) {
 		this.size = size;
 	}
-	public Orders getOrders() {
-		return orders;
-	}
-	public void setOrders(Orders orders) {
-		this.orders = orders;
-	}
+	
 	@OneToOne
 	@JoinColumn(name="infoid")
 	private GoodsInfo goodsInfo;
 	
-	@ManyToOne
-	@JoinColumn(name="oid")
-	private Orders orders;
+	@OneToMany(mappedBy = "goods", cascade = CascadeType.ALL)
+	private List<Orders> orders;
 	
 	@ManyToOne
 	@JoinColumn(name="bid")
@@ -119,10 +113,10 @@ public class Goods {
 	public void setGoodsInfo(GoodsInfo goodsInfo) {
 		this.goodsInfo = goodsInfo;
 	}
-	public Orders getOrder() {
+	public List<Orders> getOrders() {
 		return orders;
 	}
-	public void setOrder(Orders orders) {
+	public void setOrders(List<Orders> orders) {
 		this.orders = orders;
 	}
 	public List<Review> getReview() {

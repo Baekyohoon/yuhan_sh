@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta content="text/html; charset=euc-kr">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>블루사커</title>
+	<style type="text/css">
+
+	</style>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/../css/pay.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/../css/style.css}" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+	<div class=e65_108>
+		<div class=e50_597>
+			<div class="e50_598"></div>
+			<span class="e50_608"><a href="/glist_uniform">유니폼</a></span>
+			<span class="e50_627"><a href="/glist_shoes">축구화</a></span>
+			<span class="e50_628"><a href="/glist_socks">양말</a></span>
+			<span class="e50_629"><a href="/glist_clothes">의류</a></span>
+			<span class="e50_630"><a href="/glist_ball">축구공</a></span>
+			<span class="e50_631"><a href="/glist_gloves">골기퍼 장갑</a></span>
+		</div>
+		<div class=e50_600>
+			<div class="e50_601"></div>
+			<span th:if="${session.loggedInUserId == null}" class="e50_603">
+				<a href="/login">로그인</a>
+			</span>
+			<span th:if="${session.loggedInUserId != null}" class="e50_603" style="left:1515px;">
+				<a href="/logout">로그아웃</a>
+			</span>
+			<span class="e50_604"><a href="/mybox">장바구니</a></span>
+			<span class="e50_605"><a href="/edituser">마이페이지</a></span>
+			<span class="e50_607"><a href="/orders">주문/배송 조회</a></span>
+			<span class="e50_606"><a th:if="${session.loggedInUserId == null}" href="/signup1">회원가입</a></span>
+		</div>
+		<div class=e50_679>
+			<div class="e50_633"><a href="/"><img src="../img/로고.png" style="width: 100%; height: 100%;"></a></div>
+			<div class="e50_678"><input type="text" name="searchtxt" id="searchtxt" class="searchtxt">
+				<div class="searchicon"><i class="fa-solid fa-magnifying-glass" style="width:45px; height:45px;"></i>
+				</div>
+			</div>
+		</div>
+
+
+		<!--	  여기부터 body입니다-->
+		<div class=e60_383><span class="e60_384">주문/결제</span><span class="e61_56">원활한 주문을 위해 주문정보를 입력해주세요.</span>
+			<div class=e74_62><span class="e74_63">주문리스트</span>
+				<div class="e74_64">
+					<table>
+						<table>
+							<thead>
+								<tr>
+									<th>구입상품명</th>
+									<th>수량</th>
+									<th>가격</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td th:text="${orders.goods.gname}"></td>
+									<td th:text="${orders.count}"></td>
+									<td th:text="${orders.price}"></td>
+
+								</tr>
+
+								<!-- 추가적인 행들 -->
+							</tbody>
+						</table>
+
+					</table>
+				</div>
+			</div>
+			<div class=e74_65><span class="e74_66">주문자 정보</span>
+				<div class="e74_67">
+					<table>
+						<tr>
+							<th>이름</th>
+							<td th:text="${user.name}"></td>
+						</tr>
+						<tr>
+							<th>연락처</th>
+							<td th:text="${user.phone}"></td>
+						</tr>
+						<tr>
+							<th>이메일</th>
+							<td th:text="${user.email}"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class=e74_71><span class="e74_72">결제 정보</span>
+				<div class="e74_73">
+					<table>
+						<tr>
+							<th>결제정보</th>
+							<td><input type="checkbox" name="pay" id="card">카드결제<br>
+								<input type="checkbox" name="pay" id="kakao">카카오페이 결제
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class=e74_74><span class="e74_75">최종 결제금액</span>
+				<div class="e74_76"></div><span class="e74_77">최종 결제금액</span><span class="e74_78"
+					th:text="${orders.price}+'원'"></span>
+			</div>
+			<div class=e74_68><span class="e74_69">배송정보&nbsp;&nbsp;<input type="checkbox" name="userinfo" id="userinfo"
+						onchange="toggleUserInput()"><span class="userinfo">주문자 정보와 동일</span></span>
+				<div class="e74_70">
+					<table>
+						<tr>
+							<th>이름</th>
+							<td><input type="text" name="name" id="name"></td>
+						</tr>
+						<tr>
+							<th>연락처</th>
+							<td><input type="text" name="phone" id="phone"></td>
+						</tr>
+						<tr>
+							<th>주소</th>
+							<td><input type="text" name="adress"></td>
+						</tr>
+						<tr>
+							<th>주문메세지<br>(20자 내외)</th>
+							<td><input type="text" name="msg"></td>
+						</tr>
+
+					</table>
+				</div>
+			</div>
+			<form action="/completeorders" method="post">
+				<input type="hidden" th:value="${orders.oid}" name="oid">
+				<div class="e74_79"><input type="submit" value="주문하기"></div>
+			</form>
+			<form action="/deleteorders" method="post">
+				<input type="hidden" th:value="${orders.oid}" name="oid">
+				<div class="e74_80"><input type="submit" value="주문취소"></div>
+			</form>
+		</div>
+		<!--여기가 끝입니다.-->
+
+	</div>
+	<script th:inline="javascript">
+		var sendMessage = /*[[${errorMessage}]]*/ "";
+		if (sendMessage) {
+			alert(sendMessage);
+		}
+	</script>
+	<script>
+		const checkboxes = document.querySelectorAll('input[name="pay"]');
+
+		checkboxes.forEach(checkbox => {
+			checkbox.addEventListener('change', function () {
+				// 하나의 체크박스를 선택하면 나머지는 해제
+				checkboxes.forEach(otherCheckbox => {
+					if (otherCheckbox !== checkbox) {
+						otherCheckbox.checked = false;
+					}
+				});
+			});
+		});
+
+
+		function toggleUserInput() {
+			var sameUserCheckbox = document.getElementById('userinfo');
+			var userNameInput = document.getElementById('name');
+			var userPhoneInput = document.getElementById('phone');
+
+			// Set initial values from Thymeleaf (server-side)
+			var initialUserName = /*[[${user.name}]]*/ '[[${user.name}]]';
+			var initialUserPhone = /*[[${user.phone}]]*/ '[[${user.phone}]]';
+
+			// Update values dynamically on the client side
+			if (sameUserCheckbox.checked) {
+				userNameInput.value = initialUserName;
+				userPhoneInput.value = initialUserPhone;
+			} else {
+				userNameInput.value = '';  // 체크 해제 시 값 초기화
+				userPhoneInput.value = '';
+			}
+
+			// 이하에 다른 주문자 정보 입력란들에 대한 처리 추가
+		}
+
+	</script>
+</body>
+
+</html>
