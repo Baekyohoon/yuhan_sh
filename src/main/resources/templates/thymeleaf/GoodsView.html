@@ -52,16 +52,19 @@
   <div class=e2_142>
     <div class=e4_2>
       <div class=e4_3>
-        <div class="e4_6"></div>
-        <div class="e4_7"></div>
-        <div class="e4_8"></div>
-        <div class="e4_9"></div>
-        <div class="e4_10"></div>
-        <div class="e4_11"></div>
-        <div class="e4_12"></div>
+        <div class="e4_6">
+			<img th:src="@{'/img/' + ${goods.mainp}}" alt="Goods Image" style="width: 100px; height: 100px;"/>
+		</div>
+        <div class="e4_7">
+			 <div th:each="image : ${goods.images}">
+		        <img th:src="@{'/img/' + ${image.photopath}}" alt="Goods Image" style="width: 100px; height: 100px; margin-bottom: 7px;" />
+		    </div>
+		</div>
       </div>
       <div class=e4_4>
-        <div class="e4_13"></div>
+        <div class="e4_13">
+			
+		</div>
       </div>
 
       <div class=e4_5>
