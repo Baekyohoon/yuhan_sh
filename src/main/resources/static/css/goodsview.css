@@ -522,3 +522,13 @@
 .submit-button:hover {
     background-color: rgb(128, 128, 128); /* 마우스를 올렸을 때의 배경 색상 */
 }
+.selectcount {
+    width: 100%;
+    max-width: 567px;
+    height: 150px;
+    
+    margin-top: 10px;
+    overflow-y: scroll; /* 세로 스크롤을 활성화합니다. */
+    overflow-x: hidden; /* 세로 스크롤을 활성화합니다. */
+    max-height: 300%; /* 최대 높이를 300%로 설정합니다. */
+}
