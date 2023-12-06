@@ -52,18 +52,24 @@
   <div class=e2_142>
     <div class=e4_2>
       <div class=e4_3>
-        <div class="e4_6">
-			<img th:src="@{'/img/' + ${goods.mainp}}" alt="Goods Image" style="width: 100px; height: 100px;"/>
+       <div class="e4_6">
+		    <img id="image1" th:src="@{'/img/' + ${goods.mainp}}" alt="Goods Image" style="width: 100px; height: 100px;" onclick="showClickedImage('image1')"/>
 		</div>
-        <div class="e4_7">
-			 <div th:each="image : ${goods.images}">
-		        <img th:src="@{'/img/' + ${image.photopath}}" alt="Goods Image" style="width: 100px; height: 100px; margin-bottom: 7px;" />
-		    </div>
+		<div class="e4_7">
+		    <div th:each="image, iterStat : ${goods.images}">
+    <!-- 각 이미지에 클릭 이벤트 추가 -->
+			    <img th:src="@{'/img/' + ${image.photopath}}"
+			         alt="Goods Image"
+			         style="width: 100px; height: 100px; margin-bottom: 7px;"
+			         th:id="${iterStat.index}" 
+			         th:onclick="'showClickedImage('+${iterStat.index}+')'" />
+			</div>
+
 		</div>
       </div>
       <div class=e4_4>
-        <div class="e4_13">
-			
+        <div class="e4_13" id="clickedImageContainer">
+		    <img th:src="@{'/img/' + ${goods.mainp}}" id="clickedImage" alt="Clicked Image" style="width: 100%; height: 100%;"/>
 		</div>
       </div>
 
