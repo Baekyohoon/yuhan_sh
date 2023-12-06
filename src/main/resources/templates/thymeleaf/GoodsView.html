@@ -77,18 +77,22 @@
 					<span class="e5_2">사이즈 선택</span>
 					<div class="size_choice">
 						<form action="/createorders" method="post" id="orderForm">
-							<input type="hidden" name="gid" id="gid" th:value="${goods.gid}">
-							<input type="hidden" name="selectedSize" id="selectedSize">
-							<div th:each="inventory, iterStat : ${inventories}">
-								<label>
-									<input type="radio" name="size" value="${inventory.size}">
-									<span th:text="${inventory.size}"></span>
-								</label>
-							</div>
-							수량
-							<input type="text" name="count" id="count">
-							<button type="submit" class="submit-button">구매하기</button>
-						</form>
+    <input type="hidden" name="gid" id="gid" th:value="${goods.gid}">
+
+    <!-- 옵션 선택 -->
+    <div>
+        <label for="selectedOption">옵션:</label>
+        <select name="size" id="size" >
+            <option value="" disabled selected>사이즈를 선택해주세요</option>
+            <option th:each="inventory : ${inventories}" th:value="${inventory.size}" th:text="${inventory.size}"></option>
+        </select>
+    </div>
+
+    수량
+    <input type="text" name="count" id="count">
+    <button type="submit" class="submit-button">구매하기</button>
+</form>
+
 
 						<form action="/createbox" method="post" id="boxForm">
 							<!-- size와 count를 JavaScript로 수집하여 전송 -->

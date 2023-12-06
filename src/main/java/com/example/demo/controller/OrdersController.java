@@ -46,7 +46,6 @@ public class OrdersController {
 			model.addAttribute("orders",order1);
 			return "pay";
 		}
-		
 	}
 	@PostMapping("/createorders")
 	public String createorders(@RequestParam String size, @RequestParam int count,
