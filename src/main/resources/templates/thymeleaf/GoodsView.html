@@ -120,9 +120,15 @@
 			</div>
 			<div class=e5_20>
 				<div class=e5_16>
-					<div class="e5_17"></div>
-					<div class="e5_18"></div>
-					<div class="e5_19"></div>
+					<div class="e5_17">
+						<a th:href="@{'/goodsview/' + ${goods.gid}}">상세정보</a>
+					</div>
+					<div class="e5_18">
+						<a th:href="@{'/goodsreview/' + ${goods.gid}}">리뷰</a>
+					</div>
+					<div class="e5_19">
+						<a th:href="@{'/goodsqa/' + ${goods.gid}}">Q&A</a>
+					</div>
 				</div>
 				<div class=e5_21>
 					<span th:text="${goodsInfo.content}" class="e5_22"></span>
