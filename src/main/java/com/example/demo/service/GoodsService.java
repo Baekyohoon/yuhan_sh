@@ -19,11 +19,15 @@ import com.example.demo.entity.Goods;
 import com.example.demo.entity.GoodsInfo;
 import com.example.demo.entity.Images;
 import com.example.demo.entity.Inventory;
+import com.example.demo.entity.QA;
+import com.example.demo.entity.User;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.GoodsInfoRepository;
 import com.example.demo.repository.GoodsRepository;
 import com.example.demo.repository.ImagesRepository;
 import com.example.demo.repository.InventoryRepository;
+import com.example.demo.repository.QARepository;
+import com.example.demo.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -44,6 +48,12 @@ public class GoodsService {
 	 
 	 @Autowired
 	 private ImagesRepository imagesRepository;
+	 
+	 @Autowired
+	 private QARepository qaRepository;
+	 
+	 @Autowired
+	 private UserRepository userRepository;
 	 
 	// 이미지를 저장할 경로
 	 @Value("${multipart.file-upload.location}")
@@ -136,5 +146,20 @@ public class GoodsService {
 	            // 파일 저장 중 오류 발생 시 예외 처리
 	            throw new RuntimeException("Failed to save image", e);
 	        }
+	    }
+	 
+	 	@Transactional
+	    public QA createQA(int gid, String comment, String visibility, String loggedInUserId) {
+	        // QA 엔터티 생성
+		 	Goods goods = goodsRepository.findByGid(gid);
+		 	User user = userRepository.findByUserId(loggedInUserId);
+	        QA qa = new QA();
+	        qa.setGoods(goods);  // Goods 엔터티 생성 후 설정
+	        qa.setComment(comment);
+	        qa.setUser(user);
+	        qa.setPp("public".equals(visibility) ? 1 : 0);  // 공개 여부 설정
+
+	        // QA 엔터티 저장
+	        return qaRepository.save(qa);
 	    }
 }

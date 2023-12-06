@@ -10,16 +10,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.Goods;
 import com.example.demo.entity.GoodsInfo;
 import com.example.demo.entity.Images;
 import com.example.demo.entity.Inventory;
+import com.example.demo.entity.QA;
 import com.example.demo.repository.GoodsInfoRepository;
 import com.example.demo.repository.GoodsRepository;
 import com.example.demo.repository.ImagesRepository;
 import com.example.demo.repository.InventoryRepository;
+import com.example.demo.repository.QARepository;
 import com.example.demo.service.GoodsService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class GoodsController {
@@ -34,6 +39,8 @@ public class GoodsController {
 	private GoodsInfoRepository goodsInfoRepository;
 	@Autowired
 	private ImagesRepository imagesRepository;
+	@Autowired
+	private QARepository qaRepository;
 	
 	@GetMapping("/glist_ball")
 	public String goodslistball() {
@@ -102,13 +109,69 @@ public class GoodsController {
 		return "GoodsView";
 	}
 	
-	@GetMapping("/goodsreview")
-	public String GoodsReview() {
+	@GetMapping("/goodsreview/{gid}")
+	public String GoodsReview(@PathVariable int gid, Model model) {
+		Goods goods = goodsRepository.findByGid(gid);
+		GoodsInfo goodsInfo = goodsInfoRepository.findByGoods(goods);
+		List<Inventory> inventories = inventoryRepository.findByGoods(goods);
+		// Goods 객체를 모델에 추가합니다.
+	    model.addAttribute("goods", goods);
+	    model.addAttribute("goodsInfo", goodsInfo);
+	    model.addAttribute("inventories", inventories);
+	    model.addAttribute("gid",gid);
 		return "GoodsReview";
 	}
 	
-	@GetMapping("/goodsqa")
-	public String GoodsQA() {
+	@GetMapping("/goodsqa/{gid}")
+	public String GoodsQA(@PathVariable int gid, Model model) {
+		Goods goods = goodsRepository.findByGid(gid);
+		GoodsInfo goodsInfo = goodsInfoRepository.findByGoods(goods);
+		List<Inventory> inventories = inventoryRepository.findByGoods(goods);
+		// Goods 객체를 모델에 추가합니다.
+	    model.addAttribute("goods", goods);
+	    model.addAttribute("goodsInfo", goodsInfo);
+	    model.addAttribute("inventories", inventories);
+	    model.addAttribute("gid",gid);
+	    List<QA> qaList;
+	    qaList = qaRepository.findAll();
+	    model.addAttribute("qaList", qaList);
 		return "GoodsQA";
+	}
+	
+	@GetMapping("/createqa/{gid}")
+	public String CreateQA(@PathVariable int gid, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+		String loggedInUserId = (String) session.getAttribute("loggedInUserId");
+		
+		if(loggedInUserId == null) {
+			redirectAttributes.addFlashAttribute("loginMessage", "로그인 상태가 아닙니다!"); 
+			return "redirect:/login";
+		}else {
+		Goods goods = goodsRepository.findByGid(gid);
+		
+	    model.addAttribute("goods", goods);
+	    model.addAttribute("gid",gid);
+		return "createqa";
+		}
+	}
+	
+	@PostMapping("/createqa/{gid}")
+	public String CreateQA2(@PathVariable int gid,
+							@RequestParam("comment") String comment, 
+							@RequestParam("visibility") String visibility,
+							HttpSession session) {
+		 String loggedInUserId = (String) session.getAttribute("loggedInUserId");
+		QA createdQA = goodsService.createQA(gid, comment, visibility, loggedInUserId);
+		return "redirect:/goodsqa/{gid}";
+	}
+	
+	@PostMapping("/createanswer/{qid}/{gid}")
+	public String CreateAnswer(@PathVariable int qid,
+								@PathVariable int gid,
+							   @RequestParam(name = "answer") String answer) {
+		 QA qa = qaRepository.findByQid(qid);
+		 qa.setAnswer(answer);
+		 qaRepository.save(qa);
+		
+		return "redirect:/goodsqa/"+gid;
 	}
 }

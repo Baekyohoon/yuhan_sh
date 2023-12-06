@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A 작성</title>
+</head>
+<body>
+
+<h2>Q&A 작성하기</h2>
+
+<form id="qaForm" th:action="@{'/createqa/' + ${goods.gid}}" method="POST">
+    <label for="comment">질문 내용:</label><br>
+    <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br>
+
+    <label>공개 여부:</label><br>
+    <input type="radio" id="public" name="visibility" value="public" checked>
+    <label for="public">공개</label>
+    <input type="radio" id="private" name="visibility" value="private">
+    <label for="private">비공개</label><br>
+
+    <button type="submit">등록</button>
+</form>
+
+</body>
+</html>

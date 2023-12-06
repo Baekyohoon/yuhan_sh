@@ -8,7 +8,8 @@
 	<style type="text/css">
 
 	</style>
-	
+
+	<link rel="stylesheet" type="text/css" th:href="@{/../css/goodsview.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/../css/goodsreview.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/../css/style.css}" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,88 +20,231 @@
 
 <body>
 	<div class=e49_2>
-  <div class=e50_597>
-    <div class="e50_598"></div>
-    <span  class="e50_608"><a href="/glist_uniform">유니폼</a></span>
-    <span  class="e50_627"><a href="/glist_shoes">축구화</a></span>
-    <span  class="e50_628"><a href="/glist_socks">양말</a></span>
-    <span  class="e50_629"><a href="/glist_clothes">의류</a></span>
-    <span  class="e50_630"><a href="/glist_ball">축구공</a></span>
-    <span  class="e50_631"><a href="/glist_gloves">골기퍼 장갑</a></span>
-  </div>
-    <div class=e50_600>
-    <div class="e50_601"></div>
-    <span th:if="${session.loggedInUserId == null}" class="e50_603">
-		<a href="/login">로그인</a>	
-    </span>
-    <span th:if="${session.loggedInUserId != null}" class="e50_603" style="left:1515px;">
-		<a href="/logout">로그아웃</a>
-    </span>
-    <span  class="e50_604"><a href="/mybox">장바구니</a></span>
-    <span  class="e50_605"><a href="/edituser">마이페이지</a></span>
-    <span  class="e50_607"><a href="/orders">주문/배송 조회</a></span>
-    <span  class="e50_606"><a th:if="${session.loggedInUserId == null}" href="/signup1">회원가입</a></span>
-  </div>
-  <div class=e50_679>
-    <div class="e50_633"><a href="/"><img src="../img/로고.png" style="width: 100%; height: 100%;"></a></div>
-    <div class="e50_678"><input type="text" name="searchtxt" id="searchtxt" class="searchtxt">
-    <div class="searchicon"><i class="fa-solid fa-magnifying-glass" style="width:45px; height:45px;"></i></div></div>
-  </div>
-  
-  
- <!-- body 시작!!!!!!!!!!!!!!!!!!!1-->
-  <div class=e5_86>
-    <div class=e5_87>
-      <div class=e5_88>
-        <div class="e5_89"></div>
-        <div class="e5_90"></div>
-        <div class="e5_91"></div>
-        <div class="e5_92"></div>
-        <div class="e5_93"></div>
-        <div class="e5_94"></div>
-        <div class="e5_95"></div>
-      </div>
-      <div class=e5_96>
-        <div class="e5_97"></div>
-      </div>
-      <div class=e5_98><span  class="e5_99"><팬텀> 축구화 나이키 팬텀 GX 엘리트 FG (DC9968300)(DC9968-300)</span><span  class="e5_100">289,000원</span><span  class="e5_101">사이즈 선택</span>
-        <div class="e5_102"></div>
-        <div class="e5_103"></div>
-        <div class="e5_104"></div>
-        <div class="e5_105"></div>
-        <div class="e5_106"></div>
-        <div class="e5_107"></div>
-        <div class="e5_108"></div>
-        <div class="e5_109"></div>
-        <div class="e5_110"></div>
-        <div class="e5_111"></div>
-        <div class="e5_112"></div>
-        <div class="e5_113"></div>
-      </div>
-    </div>
-    <div class=e5_114>
-      <div class=e5_115>
-        <div class="e5_116"></div>
-        <div class="e5_117"></div>
-        <div class="e5_118"></div>
-      </div>
-      <div class="e5_140"></div><span  class="e5_141">상품리뷰</span>
-      <div class="e5_142"></div>
-      <div class="e5_143"></div>
-      <div class="e5_144"></div>
-      <div class="e5_146"></div>
-      <div class="e5_147"></div>
-      <div class="e5_145"></div>
-      <div class="e5_148"></div>
-      <div class="e5_149"></div><span  class="e5_150">작성자</span>
-      <div class="e5_151"></div>
-      <div class="e5_152"></div><span  class="e5_153">날짜</span>
-    </div>
-  </div>
-<!-- body 끝!!!!!!!!!!!!!!!!!!!1-->
-  
 
-</div>
+		<div class=e50_597>
+			<div class="e50_598"></div>
+			<span class="e50_608"><a href="/glist_uniform">유니폼</a></span>
+			<span class="e50_627"><a href="/glist_shoes">축구화</a></span>
+			<span class="e50_628"><a href="/glist_socks">양말</a></span>
+			<span class="e50_629"><a href="/glist_clothes">의류</a></span>
+			<span class="e50_630"><a href="/glist_ball">축구공</a></span>
+			<span class="e50_631"><a href="/glist_gloves">골기퍼 장갑</a></span>
+		</div>
+		<div class=e50_600>
+			<div class="e50_601"></div>
+			<span th:if="${session.loggedInUserId == null}" class="e50_603">
+				<a href="/login">로그인</a>
+			</span>
+			<span th:if="${session.loggedInUserId != null}" class="e50_603" style="left:1515px;">
+				<a href="/logout">로그아웃</a>
+			</span>
+			<span class="e50_604"><a href="/mybox">장바구니</a></span>
+			<span class="e50_605"><a href="/edituser">마이페이지</a></span>
+			<span class="e50_607"><a href="/orders">주문/배송 조회</a></span>
+			<span class="e50_606"><a th:if="${session.loggedInUserId == null}" href="/signup1">회원가입</a></span>
+		</div>
+		<div class=e50_679>
+			<div class="e50_633"><a href="/"><img src="../img/로고.png" style="width: 100%; height: 100%;"></a></div>
+			<div class="e50_678"><input type="text" name="searchtxt" id="searchtxt" class="searchtxt">
+				<div class="searchicon"><i class="fa-solid fa-magnifying-glass" style="width:45px; height:45px;"></i>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- body 시작!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+		<div class=e2_142>
+			<div class=e4_2>
+				<div class=e4_3>
+					<div class="e4_6">
+						<img id="image1" th:src="@{'/img/' + ${goods.mainp}}" alt="Goods Image"
+							style="width: 100px; height: 100px;" onclick="showClickedImage('image1')" />
+					</div>
+					<div class="e4_7">
+						<div th:each="image, iterStat : ${goods.images}">
+							<!-- 각 이미지에 클릭 이벤트 추가 -->
+							<img th:src="@{'/img/' + ${image.photopath}}" alt="Goods Image"
+								style="width: 100px; height: 100px; margin-bottom: 7px;" th:id="${iterStat.index}"
+								th:onclick="'showClickedImage('+${iterStat.index}+')'" />
+						</div>
+
+					</div>
+				</div>
+				<div class=e4_4>
+					<div class="e4_13" id="clickedImageContainer">
+						<img th:src="@{'/img/' + ${goods.mainp}}" id="clickedImage" alt="Clicked Image"
+							style="width: 100%; height: 100%;" />
+					</div>
+				</div>
+
+
+				<div class=e4_5>
+					<span th:text="${goods.gname}" class="e4_14"></span>
+					<span th:text="${goods.price}+원" class="e4_15"></span>
+					<span class="e5_2">사이즈 선택</span>
+					<div class="size_choice">
+						<form action="/createorders" method="post" id="orderForm">
+							<input type="hidden" name="gid" id="gid" th:value="${goods.gid}">
+
+							<!-- 옵션 선택 -->
+							<div>
+								<label for="size">옵션:</label>
+								<select name="size" id="size">
+									<option value="" disabled selected>사이즈를 선택해주세요</option>
+									<option th:each="inventory : ${inventories}" th:value="${inventory.size}"
+										th:text="${inventory.size}"></option>
+								</select>
+							</div>
+
+							<!-- 동적으로 추가되는 요소들을 감싸는 div -->
+							<div class="selectcount" id="selectcount">
+							</div>
+
+							<button type="submit" class="submit-button">구매하기</button>
+						</form>
+
+
+
+						<form action="/createbox" method="post" id="boxForm">
+							<!-- size와 count를 JavaScript로 수집하여 전송 -->
+							<input type="hidden" name="gid" id="gid" th:value="${goods.gid}">
+							<input type="hidden" name="boxsize" id="boxsize">
+							<input type="hidden" name="boxcount" id="boxcount">
+
+							<button type="button" class="submit-button" onclick="addToCart()">장바구니</button>
+						</form>
+					</div>
+
+				</div>
+			</div>
+			<div class=e5_114>
+		      <div class=e5_16>
+					<div class="e5_17">
+						<a th:href="@{'/goodsview/' + ${goods.gid}}">상세정보</a>
+					</div>
+					<div class="e5_18">
+						<a th:href="@{'/goodsreview/' + ${goods.gid}}">리뷰</a>
+					</div>
+					<div class="e5_19">
+						<a th:href="@{'/goodsqa/' + ${goods.gid}}">Q&A</a>
+					</div>
+				</div>
+		      <div class="e5_140"></div><span  class="e5_141">상품리뷰</span>
+		      <div class="e5_142"></div>
+		      <div class="e5_143"></div>
+		      <div class="e5_144"></div>
+		      <div class="e5_146"></div>
+		      <div class="e5_147"></div>
+		      <div class="e5_145"></div>
+		      <div class="e5_148"></div>
+		      <div class="e5_149"></div><span  class="e5_150">작성자</span>
+		      <div class="e5_151"></div>
+		      <div class="e5_152"></div><span  class="e5_153">날짜</span>
+		    </div>
+		</div>
+		<!-- body 끝!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
+
+	</div>
+	<script th:src="@{/../js/goodsview.js}"></script>
+	<script>
+		function addToCart() {
+			// '장바구니' 버튼 클릭 시 실행되는 함수
+			var selectedSize = document.querySelector('input[name="size"]:checked');
+			var count = document.getElementById('count');
+
+			if (selectedSize && count) {
+				// 선택한 size와 count 값을 각각의 hidden input에 할당
+				document.getElementById('boxsize').value = selectedSize.value;
+				document.getElementById('boxcount').value = count.value;
+
+				// 폼 제출
+				document.getElementById('boxForm').submit();
+			} else {
+				alert('사이즈와 수량을 선택하세요.');
+			}
+		}
+	</script>
+
+	<script>
+		// size 선택 시 이벤트 처리
+		document.getElementById('size').addEventListener('change', function () {
+			var selectedOption = document.getElementById('size').value;
+
+			// selectcount div에 동적으로 요소 추가
+			var selectcountDiv = document.getElementById('selectcount');
+
+			// 기존에 추가된 요소를 삭제하지 않고 새로운 div 생성
+			var newDiv = document.createElement('div');
+			newDiv.style = 'background-color: rgb(232, 232, 232); border-radius: 5px;';
+
+			if (selectedOption) {
+				// 상품명, 옵션 표시
+				var productInfo = document.createElement('p');
+				productInfo.textContent = '옵션: ' + selectedOption;
+				newDiv.appendChild(productInfo);
+
+				// 수량 조절 버튼 추가
+				var quantityLabel = document.createElement('label');
+				quantityLabel.textContent = '수량 ';
+				newDiv.appendChild(quantityLabel);
+
+				var increaseButton = document.createElement('button');
+				increaseButton.textContent = '+';
+				increaseButton.addEventListener('click', function () {
+					event.preventDefault();
+					quantityInput.value = parseInt(quantityInput.value) + 1;
+				});
+				newDiv.appendChild(increaseButton);
+
+				var quantityInput = document.createElement('input');
+				quantityInput.type = 'number';
+				quantityInput.name = 'count';
+				quantityInput.id = 'count';
+				quantityInput.value = 1;
+				quantityInput.min = 1;
+				quantityInput.style.width = '20px';
+				quantityInput.style.appearance = 'textfield'; // Firefox에서도 화살표를 없애기 위해
+				quantityInput.style.border = 'none'; // 테두리 제거
+				quantityInput.style.outline = 'none'; // 외곽선 제거
+				quantityInput.style.padding = '0'; // 안쪽 여백 제거
+				quantityInput.style.textAlign = 'center'; // 텍스트 가운데 정렬
+				quantityInput.style.background = 'none'; // 배경 제거
+				quantityInput.style.color = 'inherit'; // 글자색 상속
+				quantityInput.addEventListener('change', function () {
+					if (quantityInput.value < 1) {
+						quantityInput.value = 1;
+					}
+				});
+				newDiv.appendChild(quantityInput);
+
+
+
+				var decreaseButton = document.createElement('button');
+				decreaseButton.textContent = '-';
+				decreaseButton.addEventListener('click', function () {
+					event.preventDefault();
+					if (quantityInput.value > 1) {
+						quantityInput.value = parseInt(quantityInput.value) - 1;
+					}
+				});
+				newDiv.appendChild(decreaseButton);
+
+				// 삭제 버튼 추가
+				var deleteButton = document.createElement('button');
+				deleteButton.textContent = '삭제';
+				deleteButton.style='margin-left:5px; border:1px';
+				deleteButton.addEventListener('click', function () {
+					// 클릭한 삭제 버튼이 속한 div를 제거
+					selectcountDiv.removeChild(newDiv);
+				});
+				newDiv.appendChild(deleteButton);
+
+				// 새로운 div를 selectcountDiv에 추가
+				selectcountDiv.appendChild(newDiv);
+			}
+		});
+	</script>
 </body>
 
 </html>

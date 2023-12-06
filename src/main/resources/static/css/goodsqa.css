@@ -397,7 +397,7 @@
 	letter-spacing:0;
 }
 .e5_132 { 
-	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+	
 	width:208px;
 	height:62px;
 	position:absolute;
@@ -405,7 +405,7 @@
 	top:122px;
 }
 .e5_137 { 
-	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+	
 	width:1220px;
 	height:625px;
 	position:absolute;
@@ -523,4 +523,8 @@
 	position:absolute;
 	left:362px;
 	top:19px;
+}
+
+tbody{
+	text-align: center;
 }
