@@ -19,6 +19,8 @@ public interface OrdersRepository extends JpaRepository<Orders, Integer>{
 	
 	List<Orders> findByUserAndStateOrStateOrState(User user, String  state, String  state1, String  state2);
 	
+	List<Orders> findByStateOrState(String  state, String  state1);
+	
 	List<Orders> findByUser(User user);
 	
 	

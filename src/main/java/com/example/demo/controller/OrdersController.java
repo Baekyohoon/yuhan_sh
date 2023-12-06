@@ -126,13 +126,36 @@ public class OrdersController {
 		if (loggedInUserId == null) {
 	        redirectAttributes.addFlashAttribute("loginMessage", "로그인 상태가 아닙니다!");
 	        return "redirect:/login";
-	    } else {
+	    }else if(user.getId().equals("admin")) {
+	    	 List<Orders> orders = ordersR.findByStateOrState("결제 완료","배송 중");
+		     model.addAttribute("user", user);
+		     model.addAttribute("orders", orders);
+	    	return "Orders";
+	    }
+		else {
 	        List<Orders> orders = ordersR.findByUserAndStateOrStateOrState(user,"결제 완료","배송 중","배송 완료");
 	        model.addAttribute("user", user);
 	        model.addAttribute("orders", orders);
 	        return "Orders";
 	    }
-		
-		
+	}
+	
+	@PostMapping("/changestate")
+	public String changestate(@RequestParam(name="oid", required = false) List<Integer> oid, @RequestParam(name="state", required = false) List<String> state,
+			HttpSession session, RedirectAttributes redirectAttributes) {
+		String loggedInUserId = (String) session.getAttribute("loggedInUserId");
+		User user = userR.findByUserId(loggedInUserId);
+		if (loggedInUserId == null) {
+	        redirectAttributes.addFlashAttribute("loginMessage", "로그인 상태가 아닙니다!");
+	        return "redirect:/login";
+	    }else if(user.getId().equals("admin")) {
+		     for (int i = 0; i < oid.size(); i++) {
+				Orders orders = ordersR.findByOid1(oid.get(i));
+				orders.setState(state.get(i));
+				ordersR.save(orders);
+			}
+	    	return "redirect:/orders";
+	    }
+		return "redirect:/orders";
 	}
 }
