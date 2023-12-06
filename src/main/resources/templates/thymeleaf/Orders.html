@@ -51,7 +51,31 @@
 <!--	  여기부터 body입니다-->
 <div class=e61_77><span  class="e61_78">주문/배송 조회</span>
   <div class=e61_79>
-    <div class="e61_80"></div>
+    <div class="e61_80">
+		<table>
+					<thead>
+						<tr>
+							<th colspan="2">상품명(옵션)</th>
+							<th>수량</th>
+							<th>주문금액</th>
+							<th>주문상태</th>
+							<th>리뷰작성</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="order, status : ${orders}">
+							<td><img th:src="@{'/../img/'+${order.goods.mainp}}"
+									style="max-width: 150px; max-height: 100px; min-width: 150px; min-height: 100px;">
+							</td>
+							<td th:text="${order.goods.gname} + '(옵션:' + ${order.size} + ')'"></td>
+							<td th:text="${order.count}"></td>
+							<td th:text="${order.price}"></td>
+							<td th:text="${order.state}"></td>
+							<td th:if="${order.state == '배송 완료'}"><button>리뷰작성하기</button></td>
+						</tr>
+					</tbody>
+				</table>
+	</div>
     <div class="e61_81"></div>
   </div><span  class="e61_82">“이성주”님께서 주문하신 내역입니다.</span>
 </div>

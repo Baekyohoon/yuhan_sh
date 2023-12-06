@@ -49,10 +49,7 @@ public class MyPageController {
 		
 	}
 	
-	@GetMapping("/orders")
-	public String oders() {
-		return "Orders";
-	}
+	
 	
 	@GetMapping("/myqa")
 	public String myqa() {

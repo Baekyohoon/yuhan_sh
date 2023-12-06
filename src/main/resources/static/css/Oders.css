@@ -1,7 +1,7 @@
 
 .e61_77 { 
 	width:1375px;
-	height:1375px;
+	height:1800px;
 	position:absolute;
 	overflow:hidden;
 	top: 200px;
@@ -28,9 +28,9 @@
 	top:170px;
 }
 .e61_80 { 
-	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+	
 	width:1282px;
-	height:604px;
+	height:1237px;
 	position:absolute;
 	left:48px;
 	top:38px;
@@ -41,7 +41,7 @@
 	height:39px;
 	position:absolute;
 	left:48px;
-	top:673px;
+	top:1300px;
 }
 .e61_82 { 
 	color:rgba(0, 0, 0, 1);
@@ -55,4 +55,53 @@
 	font-size:14px;
 	letter-spacing:0;
 	line-height:px;
+}
+
+
+.e61_80 table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.e61_80 th,
+.e61_80 td {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+.e61_80 th {
+	background-color: #f2f2f2;
+}
+
+/* 비율 조절 */
+.e61_80 th:nth-child(1),
+.e61_80 td:nth-child(1) {
+	width: 10%;
+}
+
+
+.e61_80 td:nth-child(2) {
+	width: 20%;
+	text-align: left; /* 수평 가운데 정렬 */
+}
+
+.e61_80 th:nth-child(3),
+.e61_80 td:nth-child(3),
+.e61_80 th:nth-child(4),
+.e61_80 td:nth-child(4),
+.e61_80 th:nth-child(6),
+.e61_80 td:nth-child(6),
+.e61_80 th:nth-child(5),
+.e61_80 td:nth-child(5),
+.e61_80 th:nth-child(2),
+.e61_80 td:nth-child(2) {
+	width: 10%;
+}
+
+.e61_80 th,
+.e61_80 td {
+	border: none;
+	text-align: center; /* 수평 가운데 정렬 */
+    vertical-align: middle; /* 수직 가운데 정렬 */
 }

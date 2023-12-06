@@ -17,6 +17,10 @@ public interface OrdersRepository extends JpaRepository<Orders, Integer>{
 	
 	List<Orders> findByUserAndState(User user, String  state);
 	
+	List<Orders> findByUserAndStateOrStateOrState(User user, String  state, String  state1, String  state2);
+	
+	List<Orders> findByUser(User user);
+	
 	
 	
 	@Query(value = "SELECT * FROM orders WHERE oid IN (:oid)", nativeQuery = true)
