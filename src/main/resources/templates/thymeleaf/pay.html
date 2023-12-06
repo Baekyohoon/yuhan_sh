@@ -59,14 +59,16 @@
 							<thead>
 								<tr>
 									<th>구입상품명</th>
+									<th>옵션</th>
 									<th>수량</th>
 									<th>가격</th>
 
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
+								<tr th:each="orders : ${orders}">
 									<td th:text="${orders.goods.gname}"></td>
+									<td th:text="${orders.size}"></td>
 									<td th:text="${orders.count}"></td>
 									<td th:text="${orders.price}"></td>
 
@@ -111,7 +113,7 @@
 			</div>
 			<div class=e74_74><span class="e74_75">최종 결제금액</span>
 				<div class="e74_76"></div><span class="e74_77">최종 결제금액</span><span class="e74_78"
-					th:text="${orders.price}+'원'"></span>
+					th:text="${sumprice}+'원'"></span>
 			</div>
 			<div class=e74_68><span class="e74_69">배송정보&nbsp;&nbsp;<input type="checkbox" name="userinfo" id="userinfo"
 						onchange="toggleUserInput()"><span class="userinfo">주문자 정보와 동일</span></span>
@@ -138,11 +140,13 @@
 				</div>
 			</div>
 			<form action="/completeorders" method="post">
-				<input type="hidden" th:value="${orders.oid}" name="oid">
+				<div th:each="orders : ${orders}">
+				<input type="hidden" th:value="${orders.oid}" name="do"></div>
 				<div class="e74_79"><input type="submit" value="주문하기"></div>
 			</form>
 			<form action="/deleteorders" method="post">
-				<input type="hidden" th:value="${orders.oid}" name="oid">
+				<div th:each="orders : ${orders}">
+				<input type="hidden" th:value="${orders.oid}" name="do"></div>
 				<div class="e74_80"><input type="submit" value="주문취소"></div>
 			</form>
 		</div>

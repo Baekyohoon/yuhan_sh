@@ -23,6 +23,11 @@ public class Orders {
 	private Date date;
 	private String state;
 	private int price;
+	private String size;
+	private String uname;
+	private int phone;
+	private String adress;
+	private String msg;
 	
 	@ManyToOne
 	@JoinColumn(name="gid")
@@ -74,6 +79,36 @@ public class Orders {
 	}
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	public String getSize() {
+		return size;
+	}
+	public void setSize(String size) {
+		this.size = size;
+	}
+	public String getUname() {
+		return uname;
+	}
+	public void setUname(String uname) {
+		this.uname = uname;
+	}
+	public int getPhone() {
+		return phone;
+	}
+	public void setPhone(int phone) {
+		this.phone = phone;
+	}
+	public String getAdress() {
+		return adress;
+	}
+	public void setAdress(String adress) {
+		this.adress = adress;
+	}
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 	
 	

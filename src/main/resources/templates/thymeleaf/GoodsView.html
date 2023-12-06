@@ -88,7 +88,7 @@
 							<!-- 옵션 선택 -->
 							<div>
 								<label for="size">옵션:</label>
-								<select name="size" id="size">
+								<select name="size1" id="size1">
 									<option value="" disabled selected>사이즈를 선택해주세요</option>
 									<option th:each="inventory : ${inventories}" th:value="${inventory.size}"
 										th:text="${inventory.size}"></option>
@@ -109,8 +109,10 @@
 							<input type="hidden" name="gid" id="gid" th:value="${goods.gid}">
 							<input type="hidden" name="boxsize" id="boxsize">
 							<input type="hidden" name="boxcount" id="boxcount">
+							<div class="selectcount1" id="selectcount1" style="display: none;">
+							</div>
 
-							<button type="button" class="submit-button" onclick="addToCart()">장바구니</button>
+							<button type="submit" class="submit-button">장바구니</button>
 						</form>
 					</div>
 
@@ -132,35 +134,21 @@
 
 	</div>
 	<script th:src="@{/../js/goodsview.js}"></script>
-	<script>
-		function addToCart() {
-			// '장바구니' 버튼 클릭 시 실행되는 함수
-			var selectedSize = document.querySelector('input[name="size"]:checked');
-			var count = document.getElementById('count');
 
-			if (selectedSize && count) {
-				// 선택한 size와 count 값을 각각의 hidden input에 할당
-				document.getElementById('boxsize').value = selectedSize.value;
-				document.getElementById('boxcount').value = count.value;
-
-				// 폼 제출
-				document.getElementById('boxForm').submit();
-			} else {
-				alert('사이즈와 수량을 선택하세요.');
-			}
-		}
-	</script>
 
 	<script>
-		// size 선택 시 이벤트 처리
-		document.getElementById('size').addEventListener('change', function () {
-			var selectedOption = document.getElementById('size').value;
+		document.getElementById('size1').addEventListener('change', function () {
+			var selectedOption = document.getElementById('size1').value;
 
 			// selectcount div에 동적으로 요소 추가
 			var selectcountDiv = document.getElementById('selectcount');
+			var selectcountDiv1 = document.getElementById('selectcount1');
 
 			// 기존에 추가된 요소를 삭제하지 않고 새로운 div 생성
 			var newDiv = document.createElement('div');
+			newDiv.style = 'background-color: rgb(232, 232, 232); border-radius: 5px;';
+			
+			var newDiv1 = document.createElement('div');
 			newDiv.style = 'background-color: rgb(232, 232, 232); border-radius: 5px;';
 
 			if (selectedOption) {
@@ -168,67 +156,125 @@
 				var productInfo = document.createElement('p');
 				productInfo.textContent = '옵션: ' + selectedOption;
 				newDiv.appendChild(productInfo);
+				
+				var productInfo1 = document.createElement('p');
+				productInfo1.textContent = '옵션: ' + selectedOption;
+				newDiv1.appendChild(productInfo1);
+
+				var hiddenInput = document.createElement('input');
+				hiddenInput.type = 'hidden';
+				hiddenInput.name = 'size';
+				hiddenInput.value = selectedOption;
+				newDiv.appendChild(hiddenInput);
+				
+				var hiddenInput1 = document.createElement('input');
+				hiddenInput1.type = 'hidden';
+				hiddenInput1.name = 'size';
+				hiddenInput1.value = selectedOption;
+				newDiv1.appendChild(hiddenInput1);
 
 				// 수량 조절 버튼 추가
 				var quantityLabel = document.createElement('label');
 				quantityLabel.textContent = '수량 ';
 				newDiv.appendChild(quantityLabel);
+				
+				var quantityLabel1 = document.createElement('label');
+				quantityLabel1.textContent = '수량 ';
+				newDiv1.appendChild(quantityLabel1);
 
 				var increaseButton = document.createElement('button');
 				increaseButton.textContent = '+';
-				increaseButton.addEventListener('click', function () {
-					event.preventDefault();
+				increaseButton.addEventListener('click', function (event) {
 					quantityInput.value = parseInt(quantityInput.value) + 1;
+					quantityInput1.value = parseInt(quantityInput1.value) + 1;
+					event.preventDefault(); // 폼 제출 방지
 				});
 				newDiv.appendChild(increaseButton);
+				
+				var increaseButton1 = document.createElement('button');
+				increaseButton1.textContent = '+';
+				increaseButton1.addEventListener('click', function (event) {
+					quantityInput1.value = parseInt(quantityInput1.value) + 1;
+					event.preventDefault(); // 폼 제출 방지
+				});
+				newDiv1.appendChild(increaseButton1);
 
 				var quantityInput = document.createElement('input');
 				quantityInput.type = 'number';
 				quantityInput.name = 'count';
-				quantityInput.id = 'count';
 				quantityInput.value = 1;
 				quantityInput.min = 1;
 				quantityInput.style.width = '20px';
-				quantityInput.style.appearance = 'textfield'; // Firefox에서도 화살표를 없애기 위해
-				quantityInput.style.border = 'none'; // 테두리 제거
-				quantityInput.style.outline = 'none'; // 외곽선 제거
-				quantityInput.style.padding = '0'; // 안쪽 여백 제거
-				quantityInput.style.textAlign = 'center'; // 텍스트 가운데 정렬
-				quantityInput.style.background = 'none'; // 배경 제거
-				quantityInput.style.color = 'inherit'; // 글자색 상속
 				quantityInput.addEventListener('change', function () {
 					if (quantityInput.value < 1) {
 						quantityInput.value = 1;
 					}
 				});
 				newDiv.appendChild(quantityInput);
-
-
+				
+				var quantityInput1 = document.createElement('input');
+				quantityInput1.type = 'number';
+				quantityInput1.name = 'count';
+				quantityInput1.value = 1;
+				quantityInput1.min = 1;
+				quantityInput1.style.width = '20px';
+				quantityInput1.addEventListener('change', function () {
+					if (quantityInput1.value < 1) {
+						quantityInput1.value = 1;
+					}
+				});
+				newDiv1.appendChild(quantityInput1);
 
 				var decreaseButton = document.createElement('button');
 				decreaseButton.textContent = '-';
-				decreaseButton.addEventListener('click', function () {
-					event.preventDefault();
+				decreaseButton.addEventListener('click', function (event) {
 					if (quantityInput.value > 1) {
 						quantityInput.value = parseInt(quantityInput.value) - 1;
+						quantityInput1.value = parseInt(quantityInput1.value) - 1;
+						event.preventDefault(); // 폼 제출 방지
 					}
 				});
 				newDiv.appendChild(decreaseButton);
+				
+				var decreaseButton1 = document.createElement('button');
+				decreaseButton1.textContent = '-';
+				decreaseButton1.addEventListener('click', function (event) {
+					if (quantityInput1.value > 1) {
+						quantityInput1.value = parseInt(quantityInput1.value) - 1;
+						event.preventDefault(); // 폼 제출 방지
+					}
+				});
+				newDiv1.appendChild(decreaseButton1);
 
 				// 삭제 버튼 추가
 				var deleteButton = document.createElement('button');
 				deleteButton.textContent = '삭제';
-				deleteButton.style='margin-left:5px; border:1px';
-				deleteButton.addEventListener('click', function () {
+				deleteButton.style = 'margin-left: 5px; border: 1px';
+				deleteButton.addEventListener('click', function (event) {
 					// 클릭한 삭제 버튼이 속한 div를 제거
 					selectcountDiv.removeChild(newDiv);
+					selectcountDiv1.removeChild(newDiv1);
+					event.preventDefault(); // 폼 제출 방지
 				});
 				newDiv.appendChild(deleteButton);
+				
+				var deleteButton1 = document.createElement('button');
+				deleteButton1.textContent = '삭제';
+				deleteButton1.style = 'margin-left: 5px; border: 1px';
+				deleteButton1.addEventListener('click', function (event) {
+					// 클릭한 삭제 버튼이 속한 div를 제거
+					selectcountDiv.removeChild(newDiv);
+					selectcountDiv1.removeChild(newDiv1);
+					event.preventDefault(); // 폼 제출 방지
+				});
+				newDiv1.appendChild(deleteButton1);
 
 				// 새로운 div를 selectcountDiv에 추가
 				selectcountDiv.appendChild(newDiv);
+				selectcountDiv1.appendChild(newDiv1);
 			}
 		});
+
 	</script>
 </body>
 

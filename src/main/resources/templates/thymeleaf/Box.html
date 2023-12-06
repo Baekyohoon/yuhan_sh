@@ -52,7 +52,7 @@
 
 		<!--	  여기부터 body입니다-->
 		<div class=e60_383><span class="e60_384">장바구니</span><span class="e61_56">사용자가 원활한 주문을 위해 상품을 담은 곳입니다..</span>
-			
+
 			<div class="e97_138">
 				<table>
 					<thead>
@@ -62,59 +62,83 @@
 							<th>가격</th>
 							<th>수량</th>
 							<th>주문금액</th>
-							<th>주문관리</th>
-
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="orders : ${orders}">
-							<td><input type="checkbox"></td>
-							<td><img th:src="@{'/../img/'+${orders.goods.mainp}}" style="max-width: 150px; max-height: 100px; min-width: 150px; min-height: 100px;"></td>
-							<td th:text="${orders.goods.gname}"></td>
-							<td th:text="${orders.goods.price}"></td>
-							<td th:text="${orders.count}"></td>
-							<td th:text="${orders.price}"></td>
-							<td><button>주문</button><button>삭제</button></td>
+						<tr th:each="order, status : ${orders}">
+							<td><input type="checkbox" class="orderCheckbox" th:value="${order.oid}"></td>
+							<td><img th:src="@{'/../img/'+${order.goods.mainp}}"
+									style="max-width: 150px; max-height: 100px; min-width: 150px; min-height: 100px;">
+							</td>
+							<td th:text="${order.goods.gname} + '(옵션:' + ${order.size} + ')'"></td>
+							<td th:text="${order.goods.price}"></td>
+							<td th:text="${order.count}"></td>
+							<td th:text="${order.price}"></td>
 						</tr>
-
-						<!-- 추가적인 행들 -->
 					</tbody>
 				</table>
 			</div>
-			<div class="e97_139"></div>
-			<div class="e74_79"><input type="submit" value="주문하기"></div>
-			<div class="e74_80"><input type="submit" value="삭제하기"></div>
+
+			<form action="/boxorders" method="post">
+				<div class="selectoid1" id="selectoid1"></div>
+				<div class="e74_79"><input type="submit" value="주문하기" onclick="submitForm('selectoid1')"></div>
+			</form>
+
+			<form action="/deletebox" method="post">
+				<div class="selectoid2" id="selectoid2"></div>
+				<div class="e74_80"><input type="submit" value="삭제하기" onclick="submitForm('selectoid2')"></div>
+			</form>
 		</div>
 		<!--여기가 끝입니다.-->
 
 	</div>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // 전체 선택 체크박스
-        var selectAllCheckbox = document.getElementById("selectAllCheckbox");
+    var selectAllCheckbox = document.getElementById('selectAllCheckbox');
+    var orderCheckboxes = document.querySelectorAll('.orderCheckbox');
 
-        // 각 행의 체크박스들
-        var rowCheckboxes = document.querySelectorAll("tbody input[type='checkbox']");
+    // 전체 선택 체크박스의 상태가 변경될 때
+    selectAllCheckbox.addEventListener('change', function () {
+        var isChecked = selectAllCheckbox.checked;
 
-        // 상품 선택 체크박스 클릭 시
-        selectAllCheckbox.addEventListener("change", function () {
-            // 전체 행의 체크박스 상태를 상품 선택 체크박스에 맞춤
-            rowCheckboxes.forEach(function (checkbox) {
-                checkbox.checked = selectAllCheckbox.checked;
-            });
-        });
-
-        // 각 행의 체크박스 클릭 시
-        rowCheckboxes.forEach(function (checkbox) {
-            checkbox.addEventListener("change", function () {
-                // 하나라도 체크박스가 해제되면 상품 선택 체크박스도 해제
-                selectAllCheckbox.checked = Array.from(rowCheckboxes).every(function (cb) {
-                    return cb.checked;
-                });
-            });
+        // 모든 주문 체크박스의 상태를 변경
+        orderCheckboxes.forEach(function (checkbox) {
+            checkbox.checked = isChecked;
         });
     });
+
+    // 각 주문 체크박스의 상태가 변경될 때
+    orderCheckboxes.forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            // 하나라도 체크 해제되면 전체 선택 체크박스도 해제
+            if (!checkbox.checked) {
+                selectAllCheckbox.checked = false;
+            } else {
+                // 모든 주문 체크박스가 체크되었으면 전체 선택 체크박스도 체크
+                var allChecked = true;
+                orderCheckboxes.forEach(function (orderCheckbox) {
+                    if (!orderCheckbox.checked) {
+                        allChecked = false;
+                    }
+                });
+                selectAllCheckbox.checked = allChecked;
+            }
+        });
+    });
+
+    function submitForm(selectoidId) {
+        var checkboxes = document.querySelectorAll('.orderCheckbox:checked');
+        var selectoid = document.getElementById(selectoidId);
+
+        checkboxes.forEach(function (checkbox) {
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'oid';
+            input.value = checkbox.value; // 여기에 체크된 값에 해당하는 데이터를 넣어주세요.
+            selectoid.appendChild(input);
+        });
+    }
 </script>
+
 </body>
 
 </html>

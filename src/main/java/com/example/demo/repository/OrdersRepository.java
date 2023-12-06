@@ -3,6 +3,8 @@ package com.example.demo.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.example.demo.entity.Goods;
 import com.example.demo.entity.Orders;
@@ -14,4 +16,13 @@ public interface OrdersRepository extends JpaRepository<Orders, Integer>{
 	Orders findById(int id);
 	
 	List<Orders> findByUserAndState(User user, String  state);
+	
+	
+	
+	@Query(value = "SELECT * FROM orders WHERE oid IN (:oid)", nativeQuery = true)
+	List<Orders> findByOid(@Param("oid") List<Integer> oid);
+	
+	@Query(value = "SELECT * FROM orders WHERE oid IN (:oid)", nativeQuery = true)
+	Orders findByOid1(@Param("oid") int oid);
+
 }
