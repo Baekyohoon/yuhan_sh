@@ -79,4 +79,12 @@ public class OrdersController {
 		redirectAttributes.addFlashAttribute("successMessage", "결제 완료!");
 		return "redirect:/";
 	}
+	
+	@PostMapping("/deleteorders")
+	public String deleteorders(@RequestParam int oid,RedirectAttributes redirectAttributes) {
+		Orders orders = ordersR.findById(oid);
+		ordersR.delete(orders);
+		redirectAttributes.addFlashAttribute("successMessage", "주문취소!");
+		return "redirect:/";
+	}
 }
