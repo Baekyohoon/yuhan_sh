@@ -54,47 +54,51 @@
 		<div class=e2_142>
 			<div class=e4_2>
 				<div class=e4_3>
-					<div class="e4_6"></div>
-					<div class="e4_7"></div>
-					<div class="e4_8"></div>
-					<div class="e4_9"></div>
-					<div class="e4_10"></div>
-					<div class="e4_11"></div>
-					<div class="e4_12"></div>
+					<div class="e4_6">
+						<img th:src="@{'/img/' + ${goods.mainp}}" alt="Goods Image"
+							style="width: 100px; height: 100px;" />
+					</div>
+					<div class="e4_7">
+						<div th:each="image : ${goods.images}">
+							<img th:src="@{'/img/' + ${image.photopath}}" alt="Goods Image"
+								style="width: 100px; height: 100px; margin-bottom: 7px;" />
+						</div>
+					</div>
 				</div>
 				<div class=e4_4>
-					<div class="e4_13"></div>
+					<div class="e4_13">
+
+					</div>
 				</div>
 
 				<div class=e4_5>
 					<span th:text="${goods.gname}" class="e4_14"></span>
 					<span th:text="${goods.price}+원" class="e4_15"></span>
-
 					<span class="e5_2">사이즈 선택</span>
 					<div class="size_choice">
-    <form action="/createorders" method="post" id="orderForm">
-        <input type="hidden" name="gid" id="gid" th:value="${goods.gid}">
-        <input type="hidden" name="selectedSize" id="selectedSize">
-        <div th:each="inventory, iterStat : ${inventories}">
-            <label>
-                <input type="radio" name="size" value="${inventory.size}">
-                <span th:text="${inventory.size}"></span>
-            </label>
-        </div>
-        수량
-        <input type="text" name="count" id="count">
-        <button type="submit" class="submit-button">구매하기</button>
-    </form>
+						<form action="/createorders" method="post" id="orderForm">
+							<input type="hidden" name="gid" id="gid" th:value="${goods.gid}">
+							<input type="hidden" name="selectedSize" id="selectedSize">
+							<div th:each="inventory, iterStat : ${inventories}">
+								<label>
+									<input type="radio" name="size" value="${inventory.size}">
+									<span th:text="${inventory.size}"></span>
+								</label>
+							</div>
+							수량
+							<input type="text" name="count" id="count">
+							<button type="submit" class="submit-button">구매하기</button>
+						</form>
 
-    <form action="/createbox" method="post" id="boxForm">
-        <!-- size와 count를 JavaScript로 수집하여 전송 -->
-        <input type="hidden" name="gid" id="gid" th:value="${goods.gid}">
-        <input type="hidden" name="boxsize" id="boxsize">
-        <input type="hidden" name="boxcount" id="boxcount">
+						<form action="/createbox" method="post" id="boxForm">
+							<!-- size와 count를 JavaScript로 수집하여 전송 -->
+							<input type="hidden" name="gid" id="gid" th:value="${goods.gid}">
+							<input type="hidden" name="boxsize" id="boxsize">
+							<input type="hidden" name="boxcount" id="boxcount">
 
-        <button type="button" class="submit-button" onclick="addToCart()">장바구니</button>
-    </form>
-</div>
+							<button type="button" class="submit-button" onclick="addToCart()">장바구니</button>
+						</form>
+					</div>
 
 				</div>
 			</div>
@@ -115,23 +119,23 @@
 	</div>
 	<script th:src="@{/../js/goodsview.js}"></script>
 	<script>
-    function addToCart() {
-        // '장바구니' 버튼 클릭 시 실행되는 함수
-        var selectedSize = document.querySelector('input[name="size"]:checked');
-        var count = document.getElementById('count');
+		function addToCart() {
+			// '장바구니' 버튼 클릭 시 실행되는 함수
+			var selectedSize = document.querySelector('input[name="size"]:checked');
+			var count = document.getElementById('count');
 
-        if (selectedSize && count) {
-            // 선택한 size와 count 값을 각각의 hidden input에 할당
-            document.getElementById('boxsize').value = selectedSize.value;
-            document.getElementById('boxcount').value = count.value;
+			if (selectedSize && count) {
+				// 선택한 size와 count 값을 각각의 hidden input에 할당
+				document.getElementById('boxsize').value = selectedSize.value;
+				document.getElementById('boxcount').value = count.value;
 
-            // 폼 제출
-            document.getElementById('boxForm').submit();
-        } else {
-            alert('사이즈와 수량을 선택하세요.');
-        }
-    }
-</script>
+				// 폼 제출
+				document.getElementById('boxForm').submit();
+			} else {
+				alert('사이즈와 수량을 선택하세요.');
+			}
+		}
+	</script>
 </body>
 
 </html>

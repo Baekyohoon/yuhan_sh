@@ -13,9 +13,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.entity.Goods;
 import com.example.demo.entity.GoodsInfo;
+import com.example.demo.entity.Images;
 import com.example.demo.entity.Inventory;
 import com.example.demo.repository.GoodsInfoRepository;
 import com.example.demo.repository.GoodsRepository;
+import com.example.demo.repository.ImagesRepository;
 import com.example.demo.repository.InventoryRepository;
 import com.example.demo.service.GoodsService;
 
@@ -30,6 +32,8 @@ public class GoodsController {
 	private InventoryRepository inventoryRepository;
 	@Autowired
 	private GoodsInfoRepository goodsInfoRepository;
+	@Autowired
+	private ImagesRepository imagesRepository;
 	
 	@GetMapping("/glist_ball")
 	public String goodslistball() {
