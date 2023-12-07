@@ -20,6 +20,7 @@ import com.example.demo.entity.GoodsInfo;
 import com.example.demo.entity.Images;
 import com.example.demo.entity.Inventory;
 import com.example.demo.entity.QA;
+import com.example.demo.entity.Review;
 import com.example.demo.entity.User;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.GoodsInfoRepository;
@@ -27,6 +28,7 @@ import com.example.demo.repository.GoodsRepository;
 import com.example.demo.repository.ImagesRepository;
 import com.example.demo.repository.InventoryRepository;
 import com.example.demo.repository.QARepository;
+import com.example.demo.repository.ReviewRepository;
 import com.example.demo.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
@@ -55,6 +57,8 @@ public class GoodsService {
 	 @Autowired
 	 private UserRepository userRepository;
 	 
+	 @Autowired
+	 private ReviewRepository reviewRepository;
 	// 이미지를 저장할 경로
 	 @Value("${multipart.file-upload.location}")
 	    private String uploadPath;
@@ -162,4 +166,17 @@ public class GoodsService {
 	        // QA 엔터티 저장
 	        return qaRepository.save(qa);
 	    }
+	 	
+	 	public Review createReview(int gid, String comment, int star, String loggedInUserId) {
+	 		Goods goods = goodsRepository.findByGid(gid);
+		 	User user = userRepository.findByUserId(loggedInUserId);
+	 		Review review = new Review();
+	 		review.setGoods(goods);
+	 		review.setUser(user);
+	 		review.setStar(star);
+	 		review.setComment(comment);
+	 		review.setDate(new Date());
+	 		
+	 		return reviewRepository.save(review);
+	 	}
 }
