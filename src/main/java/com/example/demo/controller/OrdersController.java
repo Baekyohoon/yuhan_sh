@@ -133,7 +133,7 @@ public class OrdersController {
 	    	return "Orders";
 	    }
 		else {
-	        List<Orders> orders = ordersR.findByUserAndStateOrStateOrState(user,"결제 완료","배송 중","배송 완료");
+	        List<Orders> orders = ordersR.findByUserAndStateIn(user, Arrays.asList("결제 완료", "배송 중", "배송 완료"));
 	        model.addAttribute("user", user);
 	        model.addAttribute("orders", orders);
 	        return "Orders";
