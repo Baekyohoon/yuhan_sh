@@ -29,6 +29,7 @@ public class Orders {
 	private String adress;
 	private String msg;
 	private int rtoken;
+
 	
 	@ManyToOne
 	@JoinColumn(name="gid")
