@@ -15,7 +15,7 @@ public class Review {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int rid;
 	private String comment;
-	private double star;
+	private int star;
 	private Date date;
 	
 	@ManyToOne
@@ -54,7 +54,7 @@ public class Review {
 	public double getStar() {
 		return star;
 	}
-	public void setStar(double star) {
+	public void setStar(int star) {
 		this.star = star;
 	}
 	public Date getDate() {

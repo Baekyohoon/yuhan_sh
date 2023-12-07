@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 작성 폼</title>
+    <style>
+        .stars {
+            display: inline-block;
+        }
+
+        .star {
+            cursor: pointer;
+            font-size: 20px;
+            color: gray;
+        }
+
+        .star:hover,
+        .star.active {
+            color: gold;
+        }
+    </style>
+</head>
+<body>
+    <h2>리뷰 작성</h2>
+
+    <form th:action="@{'/createreview/' + ${goods.gid}}" method="post">
+        <div>
+            <label for="comment">리뷰 내용:</label>
+            <textarea id="comment" name="comment" rows="4" cols="50" required></textarea>
+        </div>
+
+        <div>
+            <label>별점:</label>
+            <div class="stars" id="starRating">
+                <span class="star" onclick="setRating(1)">★</span>
+                <span class="star" onclick="setRating(2)">★</span>
+                <span class="star" onclick="setRating(3)">★</span>
+                <span class="star" onclick="setRating(4)">★</span>
+                <span class="star" onclick="setRating(5)">★</span>
+            </div>
+            <input type="hidden" id="star" name="star" required>
+        </div>
+
+        <button type="submit">리뷰 작성 완료</button>
+    </form>
+
+    <script th:src="@{/../js/createReview.js}"></script>
+</body>
+</html>
