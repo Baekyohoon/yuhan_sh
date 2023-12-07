@@ -17,6 +17,8 @@ public class Review {
 	private String comment;
 	private int star;
 	private Date date;
+	private String mainp;
+	
 	
 	@ManyToOne
 	@JoinColumn(name="gid")
@@ -64,5 +66,15 @@ public class Review {
 		this.date = date;
 	}
 	
-	
+	public String getMainp() {
+		return mainp;
+	}
+	public void setMainp(String mainp) {
+		this.mainp = mainp;
+	}
+	@Override
+	public String toString() {
+		return "Review [rid=" + rid + ", comment=" + comment + ", star=" + star + ", date=" + date + ", mainp=" + mainp
+				+ ", goods=" + goods + ", user=" + user + "]";
+	}
 }

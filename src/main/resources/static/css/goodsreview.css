@@ -446,12 +446,12 @@
 	top:639px;
 }
 .e5_148 { 
-	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
-	width:773px;
+	
+	width:1300px;
 	height:162px;
 	position:absolute;
-	left:145px;
-	top:991px;
+	left:50px;
+	top:300px;
 }
 .e5_149 { 
 	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
@@ -604,4 +604,8 @@
 	position:absolute;
 	left:362px;
 	top:19px;
+}
+
+table{
+	text-align: center;
 }

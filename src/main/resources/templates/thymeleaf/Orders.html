@@ -78,7 +78,8 @@
 								<td th:text="${order.price}"></td>
 								<td th:text="${order.state}"></td>
 								<td th:if="${order.state == '배송 완료' && session.loggedInUserId != 'admin'}">
-									<a th:href="'/createreview/'+${order.goods.gid}">
+									<a th:if="${order.rtoken != 1}" 
+									th:href="'/createreview/'+${order.goods.gid} + '/' + ${order.oid}">
 									<button type="button">리뷰작성하기</button>
 									</a>
 								</td>

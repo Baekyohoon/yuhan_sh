@@ -28,7 +28,8 @@ public class Orders {
 	private int phone;
 	private String adress;
 	private String msg;
-	private int reviewt;
+	private int rtoken;
+
 	
 	@ManyToOne
 	@JoinColumn(name="gid")
@@ -110,6 +111,12 @@ public class Orders {
 	}
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+	public int getRtoken() {
+		return rtoken;
+	}
+	public void setRtoken(int rtoken) {
+		this.rtoken = rtoken;
 	}
 	
 	

@@ -19,6 +19,7 @@ import com.example.demo.entity.Goods;
 import com.example.demo.entity.GoodsInfo;
 import com.example.demo.entity.Images;
 import com.example.demo.entity.Inventory;
+import com.example.demo.entity.Orders;
 import com.example.demo.entity.QA;
 import com.example.demo.entity.Review;
 import com.example.demo.entity.User;
@@ -27,6 +28,7 @@ import com.example.demo.repository.GoodsInfoRepository;
 import com.example.demo.repository.GoodsRepository;
 import com.example.demo.repository.ImagesRepository;
 import com.example.demo.repository.InventoryRepository;
+import com.example.demo.repository.OrdersRepository;
 import com.example.demo.repository.QARepository;
 import com.example.demo.repository.ReviewRepository;
 import com.example.demo.repository.UserRepository;
@@ -59,6 +61,9 @@ public class GoodsService {
 	 
 	 @Autowired
 	 private ReviewRepository reviewRepository;
+	 
+	 @Autowired
+	 private OrdersRepository ordersRepository;
 	// 이미지를 저장할 경로
 	 @Value("${multipart.file-upload.location}")
 	    private String uploadPath;
@@ -152,6 +157,34 @@ public class GoodsService {
 	        }
 	    }
 	 
+	 private String saveReviewImage(MultipartFile file) {
+		    try {
+		        String uploadDir = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\img"; // 실제 디렉토리 경로로 설정해야 합니다.
+
+		        // 업로드 디렉토리 생성
+		        Path uploadPath = Paths.get(uploadDir);
+		        if (!Files.exists(uploadPath)) {
+		            Files.createDirectories(uploadPath);
+		        }
+
+		        // 파일명 중복을 피하기 위해 현재 시간을 이용한 고유한 파일명 생성
+		        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+
+		        // 파일 저장 경로
+		        Path filePath = uploadPath.resolve(fileName);
+		        String filePath1 = Paths.get(uploadDir, fileName).toString();
+
+		        // 파일 저장
+		        Files.copy(file.getInputStream(), Paths.get(filePath1), StandardCopyOption.REPLACE_EXISTING);
+
+		        return fileName;
+		    } catch (IOException e) {
+		        // 파일 저장 중 오류 발생 시 예외 처리
+		        throw new RuntimeException("Failed to save image", e);
+		    }
+		}
+
+	 
 	 	@Transactional
 	    public QA createQA(int gid, String comment, String visibility, String loggedInUserId) {
 	        // QA 엔터티 생성
@@ -167,7 +200,8 @@ public class GoodsService {
 	        return qaRepository.save(qa);
 	    }
 	 	
-	 	public Review createReview(int gid, String comment, int star, String loggedInUserId) {
+	 	public Review createReview(int gid, int oid, String comment, int star, String loggedInUserId, MultipartFile file) {
+	 		String FileName = saveReviewImage(file);
 	 		Goods goods = goodsRepository.findByGid(gid);
 		 	User user = userRepository.findByUserId(loggedInUserId);
 	 		Review review = new Review();
@@ -176,7 +210,10 @@ public class GoodsService {
 	 		review.setStar(star);
 	 		review.setComment(comment);
 	 		review.setDate(new Date());
-	 		
+	 		review.setMainp(FileName);
+	 		Orders orders = ordersRepository.findByOid1(oid);
+	 		orders.setRtoken(1);
+	 		ordersRepository.save(orders);
 	 		return reviewRepository.save(review);
 	 	}
 }

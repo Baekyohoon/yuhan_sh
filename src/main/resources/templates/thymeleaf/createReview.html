@@ -19,12 +19,26 @@
         .star.active {
             color: gold;
         }
+
+        /* 추가된 스타일: 이미지 미리보기를 위한 스타일 */
+        #preview {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 10px;
+        }
+    
     </style>
 </head>
 <body>
     <h2>리뷰 작성</h2>
 
-    <form th:action="@{'/createreview/' + ${goods.gid}}" method="post">
+    <form th:action="@{'/createreview/' + ${goods.gid} +'/'+ ${oid}}" method="post" enctype="multipart/form-data">
+		<div>
+            <label for="image">이미지 업로드:</label>
+            <input type="file" id="image" name="file" accept="image/*" onchange="previewImage()" />
+            <img id="preview" src="#" alt="이미지 미리보기" style="display:none;" />
+        </div>
+        
         <div>
             <label for="comment">리뷰 내용:</label>
             <textarea id="comment" name="comment" rows="4" cols="50" required></textarea>
