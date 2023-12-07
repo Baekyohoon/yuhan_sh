@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,11 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.entity.Category;
 import com.example.demo.entity.Goods;
 import com.example.demo.entity.GoodsInfo;
 import com.example.demo.entity.Inventory;
 import com.example.demo.entity.QA;
 import com.example.demo.entity.Review;
+import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.GoodsInfoRepository;
 import com.example.demo.repository.GoodsRepository;
 import com.example.demo.repository.ImagesRepository;
@@ -42,15 +45,79 @@ public class GoodsController {
 	private QARepository qaRepository;
 	@Autowired
 	private ReviewRepository reviewRepository;
+	@Autowired
+	private CategoryRepository categoryRepository;
 	
 	@GetMapping("/glist_ball")
-	public String goodslistball() {
-		return "GoodsList_ball";
+	public String goodslistball(Model model, @RequestParam(name = "sort", required = false) String sort) {
+		if("latest".equals(sort)) {
+			String name = "축구공";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByDateDesc(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_ball";
+		}else if("star".equals(sort)){
+			 String name = "축구공";
+			    List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByReviewStarDesc(name);
+			    model.addAttribute("goods", goods);
+			    
+			    return "GoodsList_ball";
+		}else if("high".equals(sort)){
+			String name = "축구공";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByPriceDesc(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_ball";
+		}else if("low".equals(sort)){
+			String name = "축구공";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByPrice(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_ball";
+		}
+		else {
+			String name = "축구공";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByDateDesc(name);
+			model.addAttribute("goods", goods);
+
+			return "GoodsList_ball";
+		}
 	}
 	
 	@GetMapping("/glist_clothes")
-	public String goodslistclothes() {
-		return "GoodsList_clothes";
+	public String goodslistclothes(Model model, @RequestParam(name = "sort", required = false) String sort) {
+		if("latest".equals(sort)) {
+			String name = "의류";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByDateDesc(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_clothes";
+		}else if("star".equals(sort)){
+			 String name = "의류";
+			    List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByReviewStarDesc(name);
+			    model.addAttribute("goods", goods);
+			    
+			    return "GoodsList_clothes";
+		}else if("high".equals(sort)){
+			String name = "의류";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByPriceDesc(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_clothes";
+		}else if("low".equals(sort)){
+			String name = "의류";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByPrice(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_clothes";
+		}
+		else {
+			String name = "의류";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByDateDesc(name);
+			model.addAttribute("goods", goods);
+
+			return "GoodsList_clothes";
+		}
 	}
 	
 	@GetMapping("/glist")
@@ -59,23 +126,148 @@ public class GoodsController {
 	}
 	
 	@GetMapping("/glist_gloves")
-	public String goodslistgloves() {
-		return "GoodsList_gloves";
+	public String goodslistgloves(Model model, @RequestParam(name = "sort", required = false) String sort) {
+		if("latest".equals(sort)) {
+			String name = "골키퍼장갑";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByDateDesc(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_gloves";
+		}else if("star".equals(sort)){
+			 String name = "골키퍼장갑";
+			    List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByReviewStarDesc(name);
+			    model.addAttribute("goods", goods);
+			    
+			    return "GoodsList_gloves";
+		}else if("high".equals(sort)){
+			String name = "골키퍼장갑";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByPriceDesc(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_gloves";
+		}else if("low".equals(sort)){
+			String name = "골키퍼장갑";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByPrice(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_gloves";
+		}
+		else {
+			String name = "골키퍼장갑";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByDateDesc(name);
+			model.addAttribute("goods", goods);
+
+			return "GoodsList_gloves";
+		}
 	}
 	
 	@GetMapping("/glist_shoes")
-	public String goodslistshoes() {
-		return "GoodsList_shoes";
+	public String goodslistshoes(Model model, @RequestParam(name = "sort", required = false) String sort) {
+		if("latest".equals(sort)) {
+			String name = "축구화";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByDateDesc(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_shoes";
+		}else if("star".equals(sort)){
+			 String name = "축구화";
+			    List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByReviewStarDesc(name);
+			    model.addAttribute("goods", goods);
+			    
+			    return "GoodsList_shoes";
+		}else if("high".equals(sort)){
+			String name = "축구화";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByPriceDesc(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_shoes";
+		}else if("low".equals(sort)){
+			String name = "축구화";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByPrice(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_shoes";
+		}
+		else {
+			String name = "축구화";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByDateDesc(name);
+			model.addAttribute("goods", goods);
+
+			return "GoodsList_shoes";
+		}
+		
 	}
 	
 	@GetMapping("/glist_socks")
-	public String goodslistsocks() {
-		return "GoodsList_socks";
+	public String goodslistsocks(Model model, @RequestParam(name = "sort", required = false) String sort) {
+		if("latest".equals(sort)) {
+			String name = "양말";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByDateDesc(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_socks";
+		}else if("star".equals(sort)){
+			 String name = "양말";
+			    List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByReviewStarDesc(name);
+			    model.addAttribute("goods", goods);
+			    
+			    return "GoodsList_socks";
+		}else if("high".equals(sort)){
+			String name = "양말";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByPriceDesc(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_socks";
+		}else if("low".equals(sort)){
+			String name = "양말";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByPrice(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_socks";
+		}
+		else {
+			String name = "양말";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByDateDesc(name);
+			model.addAttribute("goods", goods);
+
+			return "GoodsList_socks";
+		}
 	}
 	
 	@GetMapping("/glist_uniform")
-	public String goodslistuniform() {
-		return "GoodsList_uniform";
+	public String goodslistuniform(Model model, @RequestParam(name = "sort", required = false) String sort) {
+		if("latest".equals(sort)) {
+			String name = "유니폼";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByDateDesc(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_uniform";
+		}else if("star".equals(sort)){
+			 String name = "유니폼";
+			    List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByReviewStarDesc(name);
+			    model.addAttribute("goods", goods);
+			    
+			    return "GoodsList_uniform";
+		}else if("high".equals(sort)){
+			String name = "유니폼";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByPriceDesc(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_uniform";
+		}else if("low".equals(sort)){
+			String name = "유니폼";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByPrice(name);
+			model.addAttribute("goods", goods);
+			
+			return "GoodsList_uniform";
+		}
+		else {
+			String name = "유니폼";
+			List<Goods> goods = goodsRepository.findByCategory_CategorynameOrderByDateDesc(name);
+			model.addAttribute("goods", goods);
+
+			return "GoodsList_uniform";
+		}
 	}
 	
 	@GetMapping("/create")
