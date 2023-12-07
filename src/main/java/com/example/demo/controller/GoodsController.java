@@ -337,7 +337,39 @@ public class GoodsController {
 		return "GoodsQA";
 	}
 	
-	
+	@GetMapping("/search")
+	public String searchGoods(Model model,
+							  @RequestParam(required = false) String keyword,
+							  @RequestParam(name = "sort", required = false) String sort) {
+		
+		if("latest".equals(sort)) {
+		List<Goods> goods = goodsRepository.findByGnameContainingIgnoreCaseOrderByDateDesc(keyword);
+		model.addAttribute("goods" ,goods);
+		model.addAttribute("keyword" ,keyword);
+		return "search";
+		}else if("star".equals(sort)){
+			List<Goods> goods = goodsRepository.findByGnameContainingIgnoreCaseOrderByReviewStarDesc(keyword);
+			model.addAttribute("goods" ,goods);
+			model.addAttribute("keyword" ,keyword);
+			return "search";
+		}else if("high".equals(sort)) {
+			List<Goods> goods = goodsRepository.findByGnameContainingIgnoreCaseOrderByPriceDesc(keyword);
+			model.addAttribute("goods" ,goods);
+			model.addAttribute("keyword" ,keyword);
+			return "search";
+		}else if("low".equals(sort)) {
+			List<Goods> goods = goodsRepository.findByGnameContainingIgnoreCaseOrderByPrice(keyword);
+			model.addAttribute("goods" ,goods);
+			model.addAttribute("keyword" ,keyword);
+			return "search";
+		}else {
+			List<Goods> goods = goodsRepository.findByGnameContainingIgnoreCaseOrderByDateDesc(keyword);
+			model.addAttribute("goods" ,goods);
+			model.addAttribute("keyword" ,keyword);
+			return "search";
+		}
+		
+	}
 	
 	
 }

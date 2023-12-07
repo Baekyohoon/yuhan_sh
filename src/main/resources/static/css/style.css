@@ -234,10 +234,18 @@ html, body {
 	border: 10px black solid;
 }
 
-.searchtxt{
-	width:80%;
-	border:0px;
-	height: 90%;
+.search_txt{
+	position: relative;
+	top: 10px;
+	left: 5%;
+	width: 600px;
+	padding: 0;
+	background: transparent;
+	border: none;
+	outline: none;
+	float: left;
+	font-size: 1rem;
+	line-height: 30px;
 }
 .searchicon{
 	width:40px;

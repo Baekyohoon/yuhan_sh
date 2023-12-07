@@ -30,7 +30,7 @@
   </div>
    <div class=e50_600>
     <div class="e50_601"></div>
-   <span th:if="${session.loggedInUserId == null}" class="e50_603">
+    <span th:if="${session.loggedInUserId == null}" class="e50_603">
 				<a href="/login">로그인</a>
 			</span>
 			<span th:if="${session.loggedInUserId != null}" class="e50_603" style="left:1515px;">
@@ -58,26 +58,25 @@
 	</div>
   </div>
   
-  
   <!-- body 시작!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
   <div class=e29_12>
-    <div class=e29_47>
+    <div th:if="${not goods.isEmpty()}" class=e29_47>
 		<span  class="e29_48">
-			<a href="/glist_clothes?&amp;sort=latest">최신순</a>
+			<a th:href="@{|/search?sort=latest&keyword=${keyword}|}">최신순</a>
 		</span>
 		<span  class="e29_49">
-			<a href="/glist_clothes?&amp;sort=star">인기순</a>
+			<a th:href="@{|/search?sort=star&keyword=${keyword}|}">인기순</a>
 		</span>
 		<span  class="e29_50">
-			<a href="/glist_clothes?&amp;sort=high">높은 가격</a>
+			<a th:href="@{|/search?sort=high&keyword=${keyword}|}">높은 가격</a>
 		</span>
 		<span  class="e29_51">
-			<a href="/glist_clothes?&amp;sort=low">낮은 가격</a>
+			<a th:href="@{|/search?sort=low&keyword=${keyword}|}">낮은 가격</a>
 		</span>
       <div class="e29_54"></div>
     </div>
     <div class=e29_55>
-      <div class="grid-container">
+     <div th:if="${not goods.isEmpty()}" class="grid-container">
 		    <!-- 각 행에 6개의 상품을 표시 -->
 		    <div th:each="goods, iterStat : ${goods}" class="grid-item">
 		        <!-- 각 상품의 정보를 가져와서 표시 -->
@@ -90,11 +89,15 @@
 		        <span th:text="${goods.price} + '원'"></span>
 		    </div>
 		</div>
+		<div th:if="${goods.isEmpty()}">
+		    <!-- 각 행에 6개의 상품을 표시 -->
+		       <h2>검색 결과가 없습니다.</h2>
+		</div>
     </div>
     
     </div>
     <div class=e29_163>
-      
+     
     </div>
   </div>
   <!-- body 끝!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->

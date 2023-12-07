@@ -19,7 +19,6 @@ public interface GoodsRepository extends JpaRepository<Goods, Integer>{
 	List<Goods> findByCategory_CategorynameOrderByPriceDesc(String categoryname);
 	List<Goods> findByCategory_CategorynameOrderByPrice(String categoryname);
 	
-	//List<Goods> findByCategory_CategorynameAndReviewOrderByReview_StarDesc(String categoryname);
 	@Query("SELECT g, AVG(COALESCE(r.star, 0)) as avgstar " +
 	           "FROM Goods g " +
 	           "LEFT JOIN g.review r " +
@@ -28,6 +27,20 @@ public interface GoodsRepository extends JpaRepository<Goods, Integer>{
 	           "GROUP BY g " +
 	           "ORDER BY avgstar DESC")
 	List<Goods> findByCategory_CategorynameOrderByReviewStarDesc(String categoryname);
+	
+	List<Goods> findByGnameContainingIgnoreCase(String keyword);
+	List<Goods> findByGnameContainingIgnoreCaseOrderByDateDesc(String keyword);
+	List<Goods> findByGnameContainingIgnoreCaseOrderByPrice(String keyword);
+	List<Goods> findByGnameContainingIgnoreCaseOrderByPriceDesc(String keyword);
+
+	
+	@Query("SELECT g, AVG(COALESCE(r.star, 0)) as avgstar " +
+		       "FROM Goods g " +
+		       "LEFT JOIN g.review r " +
+		       "WHERE lower(g.gname) LIKE lower(concat('%', :keyword, '%')) " +
+		       "GROUP BY g " +
+		       "ORDER BY avgstar DESC")
+		List<Goods> findByGnameContainingIgnoreCaseOrderByReviewStarDesc(@Param("keyword") String keyword);
 
 }
 
