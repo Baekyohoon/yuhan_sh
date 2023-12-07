@@ -28,6 +28,7 @@ public class Orders {
 	private int phone;
 	private String adress;
 	private String msg;
+	private int reviewt;
 	
 	@ManyToOne
 	@JoinColumn(name="gid")

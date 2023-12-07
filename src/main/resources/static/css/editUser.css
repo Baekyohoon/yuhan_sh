@@ -184,3 +184,17 @@
 	height: 100%;
 	border-radius: 5px;
 }
+.mypagemenu{
+	
+	width: 200px;
+	height: 300px;
+	position: absolute;
+	top: 420px;
+	left: 200px;
+}
+
+.mypagemenu a{
+	text-decoration: none; /* 밑줄 제거 */
+	font-weight: bold;
+	color: black;
+}
