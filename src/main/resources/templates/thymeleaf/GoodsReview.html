@@ -129,17 +129,42 @@
 						<a th:href="@{'/goodsqa/' + ${goods.gid}}">Q&A</a>
 					</div>
 				</div>
-		      <div class="e5_140"></div><span  class="e5_141">상품리뷰</span>
-		      <div class="e5_142"></div>
-		      <div class="e5_143"></div>
-		      <div class="e5_144"></div>
-		      <div class="e5_146"></div>
-		      <div class="e5_147"></div>
-		      <div class="e5_145"></div>
-		      <div class="e5_148"></div>
-		      <div class="e5_149"></div><span  class="e5_150">작성자</span>
-		      <div class="e5_151"></div>
-		      <div class="e5_152"></div><span  class="e5_153">날짜</span>
+		      <span  class="e5_141">상품리뷰</span>
+		      <!-- 상품의 gid를 기반으로 리뷰를 필터링하는 부분 -->
+				<div class="e5_148">
+					<table class="table">
+						<thead>
+				           <tr>
+				              <th style="width: 100px;">작성자</th>
+				              <th style="width: 200px;">별점</th>
+				              <th style="width: 1000px;">리뷰내용</th>
+				              <th style="width: 400px;">작성날짜</th>
+				              <th style="width: 200px;">이미지</th>
+				           </tr>
+				        </thead>
+				        <tbody>
+							<tr th:if="${review.goods.gid == goods.gid}" th:each="review : ${reviewList}">
+								<td>
+									<span th:text="${review.user.id}"></span>
+								</td>
+								<td>
+									<span th:text="'★ '+${review.star}"></span>
+								</td>
+								<td>
+									<span th:text="${review.comment}"></span>
+								</td>
+								<td>
+									<span th:text="${#dates.format(review.date, 'yyyy-MM-dd HH:mm')}"></span>
+								</td>
+								<td>
+									<img th:if="${review.mainp != null}" th:src="@{'/img/' + ${review.mainp}}" style="width: 150px; height: 150px;"/>
+									<img th:if="${review.mainp == null}" src="/img/흰색.png" style="width: 150px; height: 150px;"/>
+								</td>
+							</tr>
+				        </tbody>
+					</table>
+				</div>
+
 		    </div>
 		</div>
 		<!-- body 끝!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
