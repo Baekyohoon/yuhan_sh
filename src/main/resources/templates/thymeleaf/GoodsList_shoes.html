@@ -51,89 +51,42 @@
   
   <!-- body 시작!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
   <div class=e29_12>
-    <div class=e29_47><span  class="e29_48">최신순</span><span  class="e29_49">조회순</span><span  class="e29_50">높은 가격</span><span  class="e29_51">낮은 가격</span>
+    <div class=e29_47>
+		<span  class="e29_48">
+			<a href="/glist_shoes?&amp;sort=latest">최신순</a>
+		</span>
+		<span  class="e29_49">
+			<a href="/glist_shoes?&amp;sort=star">인기순</a>
+		</span>
+		<span  class="e29_50">
+			<a href="/glist_shoes?&amp;sort=high">높은 가격</a>
+		</span>
+		<span  class="e29_51">
+			<a href="/glist_shoes?&amp;sort=low">낮은 가격</a>
+		</span>
       <div class="e29_54"></div>
     </div>
+    
     <div class=e29_55>
-      <div class=e29_59>
-        <div class="e29_65"></div><span  class="e29_66">상품명</span><span  class="e29_67">가격</span>
-      </div>
-      <div class=e29_68>
-        <div class="e29_69"></div><span  class="e29_70">상품명</span><span  class="e29_71">가격</span>
-      </div>
-      <div class=e29_72>
-        <div class="e29_73"></div><span  class="e29_74">상품명</span><span  class="e29_75">가격</span>
-      </div>
-      <div class=e29_76>
-        <div class="e29_77"></div><span  class="e29_78">상품명</span><span  class="e29_79">가격</span>
-      </div>
-      <div class=e29_80>
-        <div class="e29_81"></div><span  class="e29_82">상품명</span><span  class="e29_83">가격</span>
-      </div>
-      <div class=e29_84>
-        <div class="e29_85"></div><span  class="e29_86">상품명</span><span  class="e29_87">가격</span>
-      </div>
+      <div class="grid-container">
+		    <!-- 각 행에 6개의 상품을 표시 -->
+		    <div th:each="goods, iterStat : ${goods}" class="grid-item">
+		        <!-- 각 상품의 정보를 가져와서 표시 -->
+		        <a th:href="@{'/goodsview/' + ${goods.gid}}">
+		        	<img th:src="@{'/img/' + ${goods.mainp}}" alt="Goods Image" style="width: 170px; height: 170px;"><br>
+		        </a>
+		        <!-- 상품 이름 -->
+		        <span th:text="${goods.gname}"></span><br>
+		        <!-- 상품 가격 -->
+		        <span th:text="${goods.price} + '원'"></span>
+		    </div>
+		</div>
+
+
     </div>
-    <div class=e29_88>
-      <div class=e29_89>
-        <div class="e29_90"></div><span  class="e29_91">상품명</span><span  class="e29_92">가격</span>
-      </div>
-      <div class=e29_93>
-        <div class="e29_94"></div><span  class="e29_95">상품명</span><span  class="e29_96">가격</span>
-      </div>
-      <div class=e29_97>
-        <div class="e29_98"></div><span  class="e29_99">상품명</span><span  class="e29_100">가격</span>
-      </div>
-      <div class=e29_101>
-        <div class="e29_102"></div><span  class="e29_103">상품명</span><span  class="e29_104">가격</span>
-      </div>
-      <div class=e29_105>
-        <div class="e29_106"></div><span  class="e29_107">상품명</span><span  class="e29_108">가격</span>
-      </div>
-      <div class=e29_109>
-        <div class="e29_110"></div><span  class="e29_111">상품명</span><span  class="e29_112">가격</span>
-      </div>
+    
     </div>
-    <div class=e29_113>
-      <div class=e29_114>
-        <div class="e29_115"></div><span  class="e29_116">상품명</span><span  class="e29_117">가격</span>
-      </div>
-      <div class=e29_118>
-        <div class="e29_119"></div><span  class="e29_120">상품명</span><span  class="e29_121">가격</span>
-      </div>
-      <div class=e29_122>
-        <div class="e29_123"></div><span  class="e29_124">상품명</span><span  class="e29_125">가격</span>
-      </div>
-      <div class=e29_126>
-        <div class="e29_127"></div><span  class="e29_128">상품명</span><span  class="e29_129">가격</span>
-      </div>
-      <div class=e29_130>
-        <div class="e29_131"></div><span  class="e29_132">상품명</span><span  class="e29_133">가격</span>
-      </div>
-      <div class=e29_134>
-        <div class="e29_135"></div><span  class="e29_136">상품명</span><span  class="e29_137">가격</span>
-      </div>
-    </div>
-    <div class=e29_138>
-      <div class=e29_139>
-        <div class="e29_140"></div><span  class="e29_141">상품명</span><span  class="e29_142">가격</span>
-      </div>
-      <div class=e29_143>
-        <div class="e29_144"></div><span  class="e29_145">상품명</span><span  class="e29_146">가격</span>
-      </div>
-      <div class=e29_147>
-        <div class="e29_148"></div><span  class="e29_149">상품명</span><span  class="e29_150">가격</span>
-      </div>
-      <div class=e29_151>
-        <div class="e29_152"></div><span  class="e29_153">상품명</span><span  class="e29_154">가격</span>
-      </div>
-      <div class=e29_155>
-        <div class="e29_156"></div><span  class="e29_157">상품명</span><span  class="e29_158">가격</span>
-      </div>
-      <div class=e29_159>
-        <div class="e29_160"></div><span  class="e29_161">상품명</span><span  class="e29_162">가격</span>
-      </div>
-    </div>
+    
     <div class=e29_163>
       <div class="e29_188"></div>
       <div class="e29_189"></div>
