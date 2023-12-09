@@ -73,16 +73,21 @@ public class GoodsService {
 		// 이미지 저장
 	    List<String> fileName = saveImage(file);
 	        
-	    // GoodsInfo 생성 및 저장
-	    GoodsInfo goodsInfo = new GoodsInfo();
-	    goodsInfo.setContent(productDescription);
-	    goodsInfoRepository.save(goodsInfo);
+	    
 
 	    // Goods 이름, 가격, 날짜 설정
 	    Goods goods = new Goods();
 	    goods.setGname(productName);
 	    goods.setPrice(productPrice);
 	    goods.setDate(new Date());
+	    
+	    
+	 // GoodsInfo 생성 및 저장
+	    GoodsInfo goodsInfo = new GoodsInfo();
+	    String processedContent = productDescription.replace("\n", "<br>");
+	    goodsInfo.setContent(processedContent);
+	    goodsInfo.setGoods(goods);
+	    goodsInfoRepository.save(goodsInfo);
 	    goods.setGoodsInfo(goodsInfo);
 	    
 	 // 이미지 경로 저장

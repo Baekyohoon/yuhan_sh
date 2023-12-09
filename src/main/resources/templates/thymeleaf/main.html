@@ -8,9 +8,9 @@
 	<style type="text/css">
 
 	</style>
-	
+
 	<link rel="stylesheet" type="text/css" th:href="@{/../css/style.css}" />
-	
+	<link rel="stylesheet" type="text/css" th:href="@{/../css/main.css}" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
@@ -19,18 +19,18 @@
 
 <body>
 	<div class=e49_2>
-  <div class=e50_597>
-    <div class="e50_598"></div>
-    <span  class="e50_608"><a href="/glist_uniform">유니폼</a></span>
-    <span  class="e50_627"><a href="/glist_shoes">축구화</a></span>
-    <span  class="e50_628"><a href="/glist_socks">양말</a></span>
-    <span  class="e50_629"><a href="/glist_clothes">의류</a></span>
-    <span  class="e50_630"><a href="/glist_ball">축구공</a></span>
-    <span  class="e50_631"><a href="/glist_gloves">골기퍼 장갑</a></span>
-  </div>
-   <div class=e50_600>
-    <div class="e50_601"></div>
-    <span th:if="${session.loggedInUserId == null}" class="e50_603">
+		<div class=e50_597>
+			<div class="e50_598"></div>
+			<span class="e50_608"><a href="/glist_uniform">유니폼</a></span>
+			<span class="e50_627"><a href="/glist_shoes">축구화</a></span>
+			<span class="e50_628"><a href="/glist_socks">양말</a></span>
+			<span class="e50_629"><a href="/glist_clothes">의류</a></span>
+			<span class="e50_630"><a href="/glist_ball">축구공</a></span>
+			<span class="e50_631"><a href="/glist_gloves">골기퍼 장갑</a></span>
+		</div>
+		<div class=e50_600>
+			<div class="e50_601"></div>
+			<span th:if="${session.loggedInUserId == null}" class="e50_603">
 				<a href="/login">로그인</a>
 			</span>
 			<span th:if="${session.loggedInUserId != null}" class="e50_603" style="left:1515px;">
@@ -39,33 +39,103 @@
 			<span class="e50_604"><a href="/mybox">장바구니</a></span>
 			<span class="e50_605"><a href="/edituser">마이페이지</a></span>
 			<span class="e50_607"><a href="/orders">주문/배송 조회</a></span>
-			<span class="e50_606" th:if="${session.loggedInUserId == null}" ><a href="/signup2">회원가입</a></span>
-			<span class="e50_606" th:if="${session.loggedInUserId == 'admin'}"><a  href="/create">상품등록</a></span>
-  </div>
-  <div class=e50_679>
-    <div class="e50_633"><a href="/"><img src="../img/로고.png" style="width: 100%; height: 100%;"></a></div>
-    <div class="e50_678">
-		<div class="searchradius">
-			<form action="/search" method="get"> <!-- 검색창 주소 입력 -->
-				<input type="text" th:value="${keyword}" name="keyword" class="search_txt" required>
-				<button type="submit" class="search_btn">
-					<span class="searchicon">
-						<i class="fa-solid fa-magnifying-glass"></i>
-					</span>
-				</button>
-			</form>
+			<span class="e50_606" th:if="${session.loggedInUserId == null}"><a href="/signup2">회원가입</a></span>
+			<span class="e50_606" th:if="${session.loggedInUserId == 'admin'}"><a href="/create">상품등록</a></span>
+		</div>
+		<div class=e50_679>
+			<div class="e50_633"><a href="/"><img src="../img/로고.png" style="width: 100%; height: 100%;"></a></div>
+			<div class="e50_678">
+				<div class="searchradius">
+					<form action="/search" method="get"> <!-- 검색창 주소 입력 -->
+						<input type="text" th:value="${keyword}" name="keyword" class="search_txt" required>
+						<button type="submit" class="search_btn">
+							<span class="searchicon">
+								<i class="fa-solid fa-magnifying-glass"></i>
+							</span>
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class=e103_142>
+			<div class=e103_153>
+				<div class="e103_154"><a href="/search?keyword=Nike"><img src="../img/나이키.png" style="max-width: 100%; max-height: 100%; min-width: 100%; min-height: 100%;"></a></div>
+				<div class="e103_155"><img class="logo-container" src="../img/나이키 로고.jpg"
+						style="max-width: 100%; max-height: 100%; min-width: 100%; min-height: 100%;"></div>
+				<div class="e103_156"><img class="logo-container" src="../img/아디다스 로고.jpg"
+						style="max-width: 100%; max-height: 100%; min-width: 100%; min-height: 100%;"></div>
+				<div class="e103_157"><img class="logo-container" src="../img/퓨마로고.png" style="max-width: 100%; max-height: 100%; min-width: 100%; min-height: 100%;
+    background-color: white;"></div>
+				<div class="e103_158"><img class="logo-container" src="../img/미즈노 로고.jpg"
+						style="max-width: 100%; max-height: 100%; min-width: 100%; min-height: 100%;"></div>
+			</div><span class="e103_159">베스트 상품</span><span class="e103_339">신상품</span>
+			<div class="e103_160"></div>
+			<div class="e103_338"></div>
+			<div class=e103_337>
+				<div class="grid-container">
+		    <!-- 각 행에 6개의 상품을 표시 -->
+		    <div th:each="bgoods, iterStat : ${bestgoods}" class="grid-item">
+		        <!-- 각 상품의 정보를 가져와서 표시 -->
+		        <a th:href="@{'/goodsview/' + ${bgoods.gid}}">
+		        	<img th:src="@{'/img/' + ${bgoods.mainp}}" alt="Goods Image" style="width: 170px; height: 170px;"><br>
+		        </a>
+		        <!-- 상품 이름 -->
+		        <span th:text="${bgoods.gname}"></span><br>
+		        <!-- 상품 가격 -->
+		        <span th:text="${bgoods.price} + '원'"></span>
+		    </div>
+		</div>
+			</div>
+			<div class=e103_340>
+				<div class="grid-container">
+		    <!-- 각 행에 6개의 상품을 표시 -->
+		    <div th:each="ngoods, iterStat : ${newgoods}" class="grid-item">
+		        <!-- 각 상품의 정보를 가져와서 표시 -->
+		        <a th:href="@{'/goodsview/' + ${ngoods.gid}}">
+		        	<img th:src="@{'/img/' + ${ngoods.mainp}}" alt="Goods Image" style="width: 170px; height: 170px;"><br>
+		        </a>
+		        <!-- 상품 이름 -->
+		        <span th:text="${ngoods.gname}"></span><br>
+		        <!-- 상품 가격 -->
+		        <span th:text="${ngoods.price} + '원'"></span>
+		    </div>
+		</div>
+			</div>
 		</div>
 	</div>
+
 	</div>
-  </div>
-  
-</div>
-<script th:inline="javascript">
+	<script th:inline="javascript">
 		var sendMessage = /*[[${successMessage}]]*/ "";
 		if (sendMessage) {
 			alert(sendMessage);
 		}
 	</script>
+
+	<script>
+    // JavaScript 코드
+    document.querySelectorAll('.logo-container').forEach(function(logo) {
+        logo.addEventListener('click', function() {
+            // 클릭한 로고에 따라 다른 이미지를 154번 div에 설정합니다.
+            var targetDiv = document.querySelector('.e103_154');
+            switch (logo.src) {
+                case document.querySelector('.e103_155 img').src:
+                    targetDiv.innerHTML = '<a href="/search?keyword=Nike"><img src="../img/나이키.png" style="max-width: 100%; max-height: 100%; min-width: 100%; min-height: 100%;"></a>';
+                    break;
+                case document.querySelector('.e103_156 img').src:
+                    targetDiv.innerHTML = '<a href="/search?keyword=adidas"><img src="../img/아디다스.png" style="max-width: 100%; max-height: 100%; min-width: 100%; min-height: 100%;"></a>';
+                    break;
+                case document.querySelector('.e103_157 img').src:
+                    targetDiv.innerHTML = '<a href="/search?keyword=Puma"><img src="../img/퓨마.jpg" style="max-width: 100%; max-height: 100%; min-width: 100%; min-height: 100%;"></a>';
+                    break;
+                case document.querySelector('.e103_158 img').src:
+                    targetDiv.innerHTML = '<a href="/search?keyword=Mizuno"><img src="../img/미즈노.jpg" style="max-width: 100%; max-height: 100%; min-width: 100%; min-height: 100%;"></a>';
+                    break;
+            }
+        });
+    });
+</script>
+
 </body>
 
 </html>

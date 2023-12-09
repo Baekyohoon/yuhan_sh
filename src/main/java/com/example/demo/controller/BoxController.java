@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +34,8 @@ public class BoxController {
 	@Autowired
 	private OrdersRepository ordersR;
 	
-	@GetMapping("/mybox")
-	public String mybox(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+	@GetMapping("/mybox1")
+	public String mybox1(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 		String loggedInUserId = (String) session.getAttribute("loggedInUserId");
 		User user = userR.findByUserId(loggedInUserId); 
 		
@@ -45,6 +49,30 @@ public class BoxController {
 		}
 		
 	}
+	
+	@GetMapping("/mybox")
+	public String mybox(Model model, HttpSession session, RedirectAttributes redirectAttributes,
+	                    @RequestParam(defaultValue = "1") int page,
+	                    @RequestParam(defaultValue = "10") int size) {
+	    String loggedInUserId = (String) session.getAttribute("loggedInUserId");
+	    User user = userR.findByUserId(loggedInUserId); 
+	    
+	    if (loggedInUserId == null) {
+	        redirectAttributes.addFlashAttribute("loginMessage", "로그인 상태가 아닙니다!"); 
+	        return "redirect:/login";
+	    } else {
+	        // 사용자의 장바구니 페이지네이션
+	        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("oid").descending());
+	        Page<Orders> ordersPage = ordersR.findByUserAndState(user, "장바구니", pageable);
+	        
+	        model.addAttribute("orders", ordersPage.getContent());
+	        model.addAttribute("currentPage", ordersPage.getNumber() + 1);
+	        model.addAttribute("totalPages", ordersPage.getTotalPages());
+	        
+	        return "Box";
+	    }
+	}
+
 	
 	@PostMapping("/createbox")
 	public String createbox(@RequestParam(name="size", required = false) List<String> size, @RequestParam(name="count", required = false) List<Integer> count,
@@ -66,6 +94,11 @@ public class BoxController {
 				oders.setState("장바구니");
 				oders.setUser(user);
 				oders.setPrice(goods.getPrice()*count.get(i));
+				oders.setAdress("");
+				oders.setUname(user.getName());
+				oders.setPhone(user.getPhone());
+				oders.setMsg("");
+				oders.setRtoken(0);
 				ordersR.save(oders);
 			}
 			

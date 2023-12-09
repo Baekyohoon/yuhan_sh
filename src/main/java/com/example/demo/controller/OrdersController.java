@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -86,6 +90,11 @@ public class OrdersController {
 				oders.setState("주문 대기");
 				oders.setUser(user);
 				oders.setPrice(goods.getPrice()*count.get(i));
+				oders.setAdress("");
+				oders.setUname(user.getName());
+				oders.setPhone(user.getPhone());
+				oders.setMsg("");
+				oders.setRtoken(0);
 				ordersR.save(oders);
 				oids.add(oders.getOid());
 			}
@@ -119,8 +128,8 @@ public class OrdersController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("/orders")
-	public String oders(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+	@GetMapping("/orders1")
+	public String oders1(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 		String loggedInUserId = (String) session.getAttribute("loggedInUserId");
 		User user = userR.findByUserId(loggedInUserId);
 		if (loggedInUserId == null) {
@@ -139,6 +148,42 @@ public class OrdersController {
 	        return "Orders";
 	    }
 	}
+	
+	@GetMapping("/orders")
+	public String orders(Model model, HttpSession session, RedirectAttributes redirectAttributes,
+	                     @RequestParam(defaultValue = "1") int page,
+	                     @RequestParam(defaultValue = "10") int size) {
+	    String loggedInUserId = (String) session.getAttribute("loggedInUserId");
+	    User user = userR.findByUserId(loggedInUserId);
+	    
+	    if (loggedInUserId == null) {
+	        redirectAttributes.addFlashAttribute("loginMessage", "로그인 상태가 아닙니다!");
+	        return "redirect:/login";
+	    } else if (user.getId().equals("admin")) {
+	        // 관리자의 주문 목록 페이지네이션
+	        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("oid").descending());
+	        Page<Orders> ordersPage = ordersR.findByStateOrState("결제 완료", "배송 중", pageable);
+	        
+	        model.addAttribute("user", user);
+	        model.addAttribute("orders", ordersPage.getContent());
+	        model.addAttribute("currentPage", ordersPage.getNumber() + 1);
+	        model.addAttribute("totalPages", ordersPage.getTotalPages());
+	        
+	        return "Orders";
+	    } else {
+	        // 사용자의 주문 목록 페이지네이션
+	        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("oid").descending());
+	        Page<Orders> ordersPage = ordersR.findByUserAndStateIn(user, Arrays.asList("결제 완료", "배송 중", "배송 완료"), pageable);
+	        
+	        model.addAttribute("user", user);
+	        model.addAttribute("orders", ordersPage.getContent());
+	        model.addAttribute("currentPage", ordersPage.getNumber() + 1);
+	        model.addAttribute("totalPages", ordersPage.getTotalPages());
+	        
+	        return "Orders";
+	    }
+	}
+
 	
 	@PostMapping("/changestate")
 	public String changestate(@RequestParam(name="oid", required = false) List<Integer> oid, @RequestParam(name="state", required = false) List<String> state,

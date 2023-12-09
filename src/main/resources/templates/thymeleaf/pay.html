@@ -44,9 +44,16 @@
 		</div>
 		<div class=e50_679>
 			<div class="e50_633"><a href="/"><img src="../img/로고.png" style="width: 100%; height: 100%;"></a></div>
-			<div class="e50_678"><input type="text" name="searchtxt" id="searchtxt" class="searchtxt">
-				<div class="searchicon"><i class="fa-solid fa-magnifying-glass" style="width:45px; height:45px;"></i>
-				</div>
+			<div class="e50_678"><div class="searchradius">
+			<form action="/search" method="get"> <!-- 검색창 주소 입력 -->
+				<input type="text" th:value="${keyword}" name="keyword" class="search_txt" required>
+				<button type="submit" class="search_btn">
+					<span class="searchicon">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</span>
+				</button>
+			</form>
+		</div>
 			</div>
 		</div>
 

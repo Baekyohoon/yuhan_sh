@@ -49,9 +49,16 @@
 		</div>
 		<div class=e50_679>
 			<div class="e50_633"><a href="/"><img src="../img/로고.png" style="width: 100%; height: 100%;"></a></div>
-			<div class="e50_678"><input type="text" name="searchtxt" id="searchtxt" class="searchtxt">
-				<div class="searchicon"><i class="fa-solid fa-magnifying-glass" style="width:45px; height:45px;"></i>
-				</div>
+			<div class="e50_678"><div class="searchradius">
+			<form action="/search" method="get"> <!-- 검색창 주소 입력 -->
+				<input type="text" th:value="${keyword}" name="keyword" class="search_txt" required>
+				<button type="submit" class="search_btn">
+					<span class="searchicon">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</span>
+				</button>
+			</form>
+		</div>
 			</div>
 		</div>
 
@@ -86,8 +93,27 @@
 					</table>
 					
 				</div>
-				<div class="e61_81"></div>
-			</div><span class="e61_82">사용자께서 작성하신 리뷰입니다.</span>
+				
+			</div>
+			<div class="e61_81"><div th:if="${totalPages > 1}">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" th:href="@{/myreview?page=1}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li th:each="i : ${#numbers.sequence(1, totalPages)}" th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
+                <a class="page-link" th:href="@{/myreview?page=${i}}" th:text="${i}"></a>
+            </li>
+            <li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" th:href="@{/myreview?page=${totalPages}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div></div><span class="e61_82">사용자께서 작성하신 리뷰입니다.</span>
 		</div>
 
 		<!--여기가 끝입니다.-->

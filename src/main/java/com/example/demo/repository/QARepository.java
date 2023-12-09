@@ -2,6 +2,8 @@ package com.example.demo.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.entity.QA;
@@ -12,4 +14,6 @@ public interface QARepository extends JpaRepository<QA, Integer>{
 	List<QA> findByUserOrderByQid(User user);
 	List<QA> findByOrderByQid();
 	QA findByQid(int qid);
+	
+	Page<QA> findByUserOrderByQid(User user, Pageable pageable);
 }

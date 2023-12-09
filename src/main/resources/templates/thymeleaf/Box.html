@@ -39,14 +39,21 @@
 			<span class="e50_604"><a href="/mybox">장바구니</a></span>
 			<span class="e50_605"><a href="/edituser">마이페이지</a></span>
 			<span class="e50_607"><a href="/orders">주문/배송 조회</a></span>
-			<span class="e50_606" th:if="${session.loggedInUserId == null}" ><a href="/signup2">회원가입</a></span>
-			<span class="e50_606" th:if="${session.loggedInUserId == 'admin'}"><a  href="/create">상품등록</a></span>
+			<span class="e50_606" th:if="${session.loggedInUserId == null}"><a href="/signup2">회원가입</a></span>
+			<span class="e50_606" th:if="${session.loggedInUserId == 'admin'}"><a href="/create">상품등록</a></span>
 		</div>
 		<div class=e50_679>
 			<div class="e50_633"><a href="/"><img src="../img/로고.png" style="width: 100%; height: 100%;"></a></div>
-			<div class="e50_678"><input type="text" name="searchtxt" id="searchtxt" class="searchtxt">
-				<div class="searchicon"><i class="fa-solid fa-magnifying-glass" style="width:45px; height:45px;"></i>
-				</div>
+			<div class="e50_678"><div class="searchradius">
+			<form action="/search" method="get"> <!-- 검색창 주소 입력 -->
+				<input type="text" th:value="${keyword}" name="keyword" class="search_txt" required>
+				<button type="submit" class="search_btn">
+					<span class="searchicon">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</span>
+				</button>
+			</form>
+		</div>
 			</div>
 		</div>
 
@@ -89,56 +96,78 @@
 				<div class="selectoid2" id="selectoid2"></div>
 				<div class="e74_80"><input type="submit" value="삭제하기" onclick="submitForm('selectoid2')"></div>
 			</form>
+			<div class="pagezone"><!-- 페이지네이션 추가 -->
+				<div th:if="${totalPages > 1}">
+					<nav aria-label="Page navigation">
+						<ul class="pagination">
+							<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+								<a class="page-link" th:href="@{/mybox?page=1}" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+							<li th:each="i : ${#numbers.sequence(1, totalPages)}"
+								th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
+								<a class="page-link" th:href="@{/mybox?page=${i}}" th:text="${i}"></a>
+							</li>
+							<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+								<a class="page-link" th:href="@{/mybox?page=${totalPages}}" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
 		</div>
 		<!--여기가 끝입니다.-->
 
 	</div>
-<script>
-    var selectAllCheckbox = document.getElementById('selectAllCheckbox');
-    var orderCheckboxes = document.querySelectorAll('.orderCheckbox');
+	<script>
+		var selectAllCheckbox = document.getElementById('selectAllCheckbox');
+		var orderCheckboxes = document.querySelectorAll('.orderCheckbox');
 
-    // 전체 선택 체크박스의 상태가 변경될 때
-    selectAllCheckbox.addEventListener('change', function () {
-        var isChecked = selectAllCheckbox.checked;
+		// 전체 선택 체크박스의 상태가 변경될 때
+		selectAllCheckbox.addEventListener('change', function () {
+			var isChecked = selectAllCheckbox.checked;
 
-        // 모든 주문 체크박스의 상태를 변경
-        orderCheckboxes.forEach(function (checkbox) {
-            checkbox.checked = isChecked;
-        });
-    });
+			// 모든 주문 체크박스의 상태를 변경
+			orderCheckboxes.forEach(function (checkbox) {
+				checkbox.checked = isChecked;
+			});
+		});
 
-    // 각 주문 체크박스의 상태가 변경될 때
-    orderCheckboxes.forEach(function (checkbox) {
-        checkbox.addEventListener('change', function () {
-            // 하나라도 체크 해제되면 전체 선택 체크박스도 해제
-            if (!checkbox.checked) {
-                selectAllCheckbox.checked = false;
-            } else {
-                // 모든 주문 체크박스가 체크되었으면 전체 선택 체크박스도 체크
-                var allChecked = true;
-                orderCheckboxes.forEach(function (orderCheckbox) {
-                    if (!orderCheckbox.checked) {
-                        allChecked = false;
-                    }
-                });
-                selectAllCheckbox.checked = allChecked;
-            }
-        });
-    });
+		// 각 주문 체크박스의 상태가 변경될 때
+		orderCheckboxes.forEach(function (checkbox) {
+			checkbox.addEventListener('change', function () {
+				// 하나라도 체크 해제되면 전체 선택 체크박스도 해제
+				if (!checkbox.checked) {
+					selectAllCheckbox.checked = false;
+				} else {
+					// 모든 주문 체크박스가 체크되었으면 전체 선택 체크박스도 체크
+					var allChecked = true;
+					orderCheckboxes.forEach(function (orderCheckbox) {
+						if (!orderCheckbox.checked) {
+							allChecked = false;
+						}
+					});
+					selectAllCheckbox.checked = allChecked;
+				}
+			});
+		});
 
-    function submitForm(selectoidId) {
-        var checkboxes = document.querySelectorAll('.orderCheckbox:checked');
-        var selectoid = document.getElementById(selectoidId);
+		function submitForm(selectoidId) {
+			var checkboxes = document.querySelectorAll('.orderCheckbox:checked');
+			var selectoid = document.getElementById(selectoidId);
 
-        checkboxes.forEach(function (checkbox) {
-            var input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'oid';
-            input.value = checkbox.value; // 여기에 체크된 값에 해당하는 데이터를 넣어주세요.
-            selectoid.appendChild(input);
-        });
-    }
-</script>
+			checkboxes.forEach(function (checkbox) {
+				var input = document.createElement('input');
+				input.type = 'hidden';
+				input.name = 'oid';
+				input.value = checkbox.value; // 여기에 체크된 값에 해당하는 데이터를 넣어주세요.
+				selectoid.appendChild(input);
+			});
+		}
+	</script>
 
 </body>
 

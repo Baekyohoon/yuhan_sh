@@ -20,10 +20,10 @@
 <body>
 	<div class=e65_108>
 		<div class="mypagemenu">
-		<a href="/edituser" style="font-weight: lighter;">회원정보수정</a><br><br>
-		<a href="/myreview" style="font-weight: lighter;">나의 review</a><br><br>
-		<a href="/myqa">나의 Q&A</a>
-	</div>
+			<a href="/edituser" style="font-weight: lighter;">회원정보수정</a><br><br>
+			<a href="/myreview" style="font-weight: lighter;">나의 review</a><br><br>
+			<a href="/myqa">나의 Q&A</a>
+		</div>
 		<div class=e50_597>
 			<div class="e50_598"></div>
 			<span class="e50_608"><a href="/glist_uniform">유니폼</a></span>
@@ -44,14 +44,21 @@
 			<span class="e50_604"><a href="/mybox">장바구니</a></span>
 			<span class="e50_605"><a href="/edituser">마이페이지</a></span>
 			<span class="e50_607"><a href="/orders">주문/배송 조회</a></span>
-			<span class="e50_606" th:if="${session.loggedInUserId == null}" ><a href="/signup2">회원가입</a></span>
-			<span class="e50_606" th:if="${session.loggedInUserId == 'admin'}"><a  href="/create">상품등록</a></span>
+			<span class="e50_606" th:if="${session.loggedInUserId == null}"><a href="/signup2">회원가입</a></span>
+			<span class="e50_606" th:if="${session.loggedInUserId == 'admin'}"><a href="/create">상품등록</a></span>
 		</div>
 		<div class=e50_679>
 			<div class="e50_633"><a href="/"><img src="../img/로고.png" style="width: 100%; height: 100%;"></a></div>
-			<div class="e50_678"><input type="text" name="searchtxt" id="searchtxt" class="searchtxt">
-				<div class="searchicon"><i class="fa-solid fa-magnifying-glass" style="width:45px; height:45px;"></i>
-				</div>
+			<div class="e50_678"><div class="searchradius">
+			<form action="/search" method="get"> <!-- 검색창 주소 입력 -->
+				<input type="text" th:value="${keyword}" name="keyword" class="search_txt" required>
+				<button type="submit" class="search_btn">
+					<span class="searchicon">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</span>
+				</button>
+			</form>
+		</div>
 			</div>
 		</div>
 
@@ -60,14 +67,14 @@
 		<div class=e61_77><span class="e61_78">나의 Q&A</span>
 			<div class=e61_79>
 				<div class="e61_80">
-					
+
 					<table>
 						<thead>
 							<tr>
 								<th colspan="2">상품명</th>
 								<th>답변상태</th>
 								<th>확인</th>
-								
+
 							</tr>
 						</thead>
 						<tbody>
@@ -82,9 +89,32 @@
 							</tr>
 						</tbody>
 					</table>
-					
+
 				</div>
-				<div class="e61_81"></div>
+				<div class="e61_81">
+					<!-- 페이지네이션 추가 -->
+					<div th:if="${totalPages > 1}">
+						<nav aria-label="Page navigation">
+							<ul class="pagination">
+								<li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'">
+									<a class="page-link" th:href="@{/myqa?page=1}" aria-label="Previous">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>
+								<li th:each="i : ${#numbers.sequence(1, totalPages)}"
+									th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
+									<a class="page-link" th:href="@{/myqa?page=${i}}" th:text="${i}"></a>
+								</li>
+								<li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'">
+									<a class="page-link" th:href="@{/myqa?page=${totalPages}}" aria-label="Next">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+
+				</div>
 			</div><span class="e61_82">사용자께서 작성하신 Q&A입니다.</span>
 		</div>
 
@@ -92,58 +122,58 @@
 
 	</div>
 	<script th:inline="javascript">
-    function updateCheckbox(selectElement, index) {
-        var checkboxId = "checkbox_" + index;
-        var checkbox = document.getElementById(checkboxId);
+		function updateCheckbox(selectElement, index) {
+			var checkboxId = "checkbox_" + index;
+			var checkbox = document.getElementById(checkboxId);
 
-        checkbox.checked = (selectElement.value === "배송 완료" || selectElement.value === "배송 중");
+			checkbox.checked = (selectElement.value === "배송 완료" || selectElement.value === "배송 중");
 
-        // 체크박스 상태가 변경될 때마다 호출되는 함수로, 선택된 주문의 oid와 상태를 hidden 타입으로 생성하여 div에 추가합니다.
-        updateSelectedOrders();
-    }
+			// 체크박스 상태가 변경될 때마다 호출되는 함수로, 선택된 주문의 oid와 상태를 hidden 타입으로 생성하여 div에 추가합니다.
+			updateSelectedOrders();
+		}
 
-    function updateSelectedOrders() {
-        // 선택된 주문들의 정보를 저장할 배열
-        var selectedOrders = [];
+		function updateSelectedOrders() {
+			// 선택된 주문들의 정보를 저장할 배열
+			var selectedOrders = [];
 
-        // 테이블의 tbody 요소를 선택
-        var tbody = document.querySelector('table tbody');
+			// 테이블의 tbody 요소를 선택
+			var tbody = document.querySelector('table tbody');
 
-        // 테이블의 각 행을 반복
-        var rows = tbody.getElementsByTagName('tr');
-        for (var i = 0; i < rows.length; i++) {
-            var checkbox = rows[i].querySelector('input[type="checkbox"]');
-            if (checkbox.checked) {
-                var orderId = rows[i].getAttribute('data-row-id');
-                var selectedState = rows[i].querySelector('select[name="state"]').value;
+			// 테이블의 각 행을 반복
+			var rows = tbody.getElementsByTagName('tr');
+			for (var i = 0; i < rows.length; i++) {
+				var checkbox = rows[i].querySelector('input[type="checkbox"]');
+				if (checkbox.checked) {
+					var orderId = rows[i].getAttribute('data-row-id');
+					var selectedState = rows[i].querySelector('select[name="state"]').value;
 
-                // 선택된 주문 정보를 배열에 추가
-                selectedOrders.push({ oid: orderId, state: selectedState });
-                console.log(selectedOrders);
-            }
-        }
+					// 선택된 주문 정보를 배열에 추가
+					selectedOrders.push({oid: orderId, state: selectedState});
+					console.log(selectedOrders);
+				}
+			}
 
-        // hidden 타입으로 생성된 정보를 div에 추가
-        var selectOrdersDiv = document.getElementById('selectorders');
-        selectOrdersDiv.innerHTML = "";
+			// hidden 타입으로 생성된 정보를 div에 추가
+			var selectOrdersDiv = document.getElementById('selectorders');
+			selectOrdersDiv.innerHTML = "";
 
-        for (var j = 0; j < selectedOrders.length; j++) {
-            // oid 값을 담은 hidden input 추가
-            var oidHiddenInput = document.createElement('input');
-            oidHiddenInput.type = 'hidden';
-            oidHiddenInput.name = 'oid';
-            oidHiddenInput.value = selectedOrders[j].oid;
-            selectOrdersDiv.appendChild(oidHiddenInput);
+			for (var j = 0; j < selectedOrders.length; j++) {
+				// oid 값을 담은 hidden input 추가
+				var oidHiddenInput = document.createElement('input');
+				oidHiddenInput.type = 'hidden';
+				oidHiddenInput.name = 'oid';
+				oidHiddenInput.value = selectedOrders[j].oid;
+				selectOrdersDiv.appendChild(oidHiddenInput);
 
-            // state 값을 담은 hidden input 추가
-            var stateHiddenInput = document.createElement('input');
-            stateHiddenInput.type = 'hidden';
-            stateHiddenInput.name = 'state';
-            stateHiddenInput.value = selectedOrders[j].state;
-            selectOrdersDiv.appendChild(stateHiddenInput);
-        }
-    }
-</script>
+				// state 값을 담은 hidden input 추가
+				var stateHiddenInput = document.createElement('input');
+				stateHiddenInput.type = 'hidden';
+				stateHiddenInput.name = 'state';
+				stateHiddenInput.value = selectedOrders[j].state;
+				selectOrdersDiv.appendChild(stateHiddenInput);
+			}
+		}
+	</script>
 </body>
 
 </html>

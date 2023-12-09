@@ -1,8 +1,13 @@
 package com.example.demo.controller;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,8 +67,8 @@ public class MyPageController {
 	
 	
 	
-	@GetMapping("/myqa")
-	public String myqa(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+	@GetMapping("/myqa1")
+	public String myqa1(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 		String loggedInUserId = (String) session.getAttribute("loggedInUserId");
 		User user = userR.findByUserId(loggedInUserId);
 		
@@ -83,9 +88,42 @@ public class MyPageController {
 		
 	}
 	
+	@GetMapping("/myqa")
+	public String myqa(Model model, HttpSession session, RedirectAttributes redirectAttributes,
+	                   @RequestParam(defaultValue = "1") int page,
+	                   @RequestParam(defaultValue = "10") int size) {
+	    String loggedInUserId = (String) session.getAttribute("loggedInUserId");
+	    User user = userR.findByUserId(loggedInUserId);
+	    
+	    if (loggedInUserId == null) {
+	        redirectAttributes.addFlashAttribute("loginMessage", "로그인 상태가 아닙니다!"); 
+	        return "redirect:/login";
+	    } else if (user.getId().equals("admin")) {
+	        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("qid").descending());
+	        Page<QA> qaPage = qaR.findAll(pageable);
+	        
+	        model.addAttribute("qas", qaPage.getContent());
+	        model.addAttribute("currentPage", qaPage.getNumber() + 1);
+	        model.addAttribute("totalPages", qaPage.getTotalPages());
+	        
+	        return "mypage_Q";
+	    } else {
+	        // 사용자의 QA 페이지네이션
+	        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("qid").descending());
+	        Page<QA> qaPage = qaR.findByUserOrderByQid(user, pageable);
+	        
+	        model.addAttribute("qas", qaPage.getContent());
+	        model.addAttribute("currentPage", qaPage.getNumber() + 1);
+	        model.addAttribute("totalPages", qaPage.getTotalPages());
+	        
+	        return "mypage_Q";
+	    }
+	}
+
 	
-	@GetMapping("/myreview")
-	public String MyReview(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+	
+	@GetMapping("/myreview1")
+	public String MyReview1(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 		String loggedInUserId = (String) session.getAttribute("loggedInUserId");
 		User user = userR.findByUserId(loggedInUserId);
 		
@@ -104,6 +142,37 @@ public class MyPageController {
 			return "mypage_R";
 		}	
 		
+	}
+	
+	@GetMapping("/myreview")
+	public String MyReview(Model model, HttpSession session, RedirectAttributes redirectAttributes,
+	                       @RequestParam(defaultValue = "1") int page,
+	                       @RequestParam(defaultValue = "10") int size) {
+		String loggedInUserId = (String) session.getAttribute("loggedInUserId");
+		User user = userR.findByUserId(loggedInUserId);
+	    // 이전 코드는 그대로 유지됩니다.
+	    
+	    // 페이지네이션을 위한 추가 작업
+	    if (user.getId().equals("admin")) {
+	        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("date").descending());
+	        Page<Review> reviewPage = reviewR.findAll(pageable);
+	        
+	        model.addAttribute("reviews", reviewPage.getContent());
+	        model.addAttribute("currentPage", reviewPage.getNumber() + 1);
+	        model.addAttribute("totalPages", reviewPage.getTotalPages());
+	        
+	        return "mypage_R";
+	    } else {
+	        // 사용자의 리뷰 페이지네이션
+	        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("date").descending());
+	        Page<Review> reviewPage = reviewR.findByUserOrderByDate(user, pageable);
+	        
+	        model.addAttribute("reviews", reviewPage.getContent());
+	        model.addAttribute("currentPage", reviewPage.getNumber() + 1);
+	        model.addAttribute("totalPages", reviewPage.getTotalPages());
+	        
+	        return "mypage_R";
+	    }
 	}
 	
 	

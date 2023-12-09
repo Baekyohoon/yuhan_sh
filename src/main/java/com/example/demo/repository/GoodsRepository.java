@@ -41,6 +41,11 @@ public interface GoodsRepository extends JpaRepository<Goods, Integer>{
 		       "GROUP BY g " +
 		       "ORDER BY avgstar DESC")
 		List<Goods> findByGnameContainingIgnoreCaseOrderByReviewStarDesc(@Param("keyword") String keyword);
+	
+	@Query("SELECT g FROM Goods g LEFT JOIN FETCH g.orders o GROUP BY g.id ORDER BY COUNT(o) DESC")
+    List<Goods> findAllOrderByOrderCountDesc();
+	
+	List<Goods> findByOrderByDateDesc();
 
 }
 
