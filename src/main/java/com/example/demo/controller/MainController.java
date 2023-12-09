@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,12 +19,14 @@ public class MainController {
 	@GetMapping("/")
 	public String mainpage(Model model) {
 		List<Goods> bestgoods = goodsR.findAllOrderByOrderCountDesc();
+		List<Goods> limitedList = bestgoods.stream().limit(36).collect(Collectors.toList());
 		
-		model.addAttribute("bestgoods",bestgoods);
+		model.addAttribute("bestgoods",limitedList);
 		
 		List<Goods> newgoods = goodsR.findByOrderByDateDesc();
+		List<Goods> limitedList1 = newgoods.stream().limit(36).collect(Collectors.toList());
 		
-		model.addAttribute("newgoods",newgoods);
+		model.addAttribute("newgoods",limitedList1);
 		
 		return "main";
 	}
