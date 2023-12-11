@@ -23,3 +23,5 @@
 할것들
 - 주문완료시 재고 감소하게 하기
 - 리뷰 한번만 작성되게하기
+
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
